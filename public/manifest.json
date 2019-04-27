@@ -1,0 +1,35 @@
+{
+	"name": "crypto-wallet",
+	"short_name": "crypto-wallet",
+	"icons": [
+		{
+			"src": "icons/middlewaymarkets-128x128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/middlewaymarkets-144x144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/middlewaymarkets-152x152.png",
+			"sizes": "152x152",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/middlewaymarkets-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/middlewaymarkets-256x256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		}
+	],
+	"start_url": "./index.html",
+	"display": "standalone",
+	"theme_color": "#1c1c1c",
+	"background_color": "#1c1c1c"
+}

@@ -1,0 +1,47 @@
+.welcomePage{
+    max-width: 750px;
+    margin: 0 auto !important;
+}
+
+.mainPage{
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.welcome{
+    margin-top: 130px;
+    font-size: 50px;
+    color: white;
+}
+
+.portfolioBox{
+    width: 340px;
+    height: 210px;
+    background: linear-gradient(350deg, rgb(34, 37, 39) 0%, rgb(36, 41, 43) 99%);
+    border-radius: 20px;
+}
+
+.portfolioText{
+    color: gray ;
+    font-size: 0.87rem;
+    width: 220px;
+    margin-bottom: 22px;
+}
+
+.portfolioIcon{
+    color: #f3f3f3;
+    font-size: 1.81rem;
+    margin: 25px 0 18px 0;
+}
+
+@media(max-width: 767px){
+    .welcome{
+        margin-top: 20px;
+    }
+
+    .portfolioBox{
+        margin-bottom: 40px;
+    }
+
+}
+

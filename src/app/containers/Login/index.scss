@@ -1,0 +1,45 @@
+@import '../../../stylesheets/mixins.scss';
+
+.login{
+    @include absCenter;
+    min-width: 450px;
+    height: 70vh;
+    overflow-y: auto;
+    color: #aab1b7;
+    border-bottom-left-radius: 5.0rem;
+    border-bottom-right-radius: 5.0rem;
+    border-top-right-radius: 3.0rem;
+    border-top-left-radius: 3.0rem;
+    background-color: rgb(32, 38, 43);
+
+    &__heading{
+        margin: 100px auto 130px auto;
+        width: fit-content;
+    }
+
+    &__passwordBox{
+        input{
+            background: transparent !important;
+            outline: none;
+            border: none;
+            text-align: center;
+            border-bottom: 1px solid #aab1b7;
+            border-radius: 0;
+            width: 80%;
+            padding: 0px !important;
+            height: 25px;
+            font-size: 20px;
+            &:hover, &:focus{
+                outline: none;
+            }    
+        }
+
+        margin: 50px auto;
+    }
+}
+
+@media(max-width: 491px){
+    .login{
+        min-width: 350px;
+    }
+}

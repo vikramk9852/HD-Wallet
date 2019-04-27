@@ -1,0 +1,102 @@
+@import '../../../stylesheets/mixins.scss';
+
+html,body{height:100%;}
+.recoverwallet{
+
+    height: 100vh;
+    overflow-y: auto;
+    color: #aab1b7;
+    border-bottom-left-radius: 5.0rem;
+    border-bottom-right-radius: 5.0rem;
+    border-top-right-radius: 3.0rem;
+    border-top-left-radius: 3.0rem;
+    background-color: rgb(32, 38, 43);
+    @include absCenter;
+
+    // margin-top: 10rem !important;
+    // height: -webkit-fill-available;
+    // width: 50%;
+
+    &__gradientBox{
+        border-bottom-left-radius: 5.0rem;
+        border-bottom-right-radius: 5.0rem;    
+
+        &__passPhrase{
+            padding: 3rem;
+            margin-bottom: 10px !important;
+            max-width: 40%;
+        }
+
+        &__passwordBox{
+            padding-bottom: 3rem;
+        }
+    }
+
+    &__success{
+        padding: 3rem;
+        img{
+            margin-top: 5rem;
+            padding: 1.5rem;
+        }
+    }
+
+    &__responseButton{
+        padding: 3rem;
+    }
+
+    &__textBody{
+        padding-left: 15px;
+        padding-right: 15px;
+        color: gray;
+        opacity: 0.5;
+    }
+
+    &__textHead{
+        padding-bottom: 0.2rem; 
+        // font-size: 40px;
+    }
+
+    &__stepper{
+        width: 25rem !important;
+        margin: 100px auto 0 auto;
+        padding-bottom: 2.5rem;
+    }
+   
+}
+
+
+
+.splitted-input{
+    // width: 60% !important;
+    color: black;
+    text-align: center;
+    border: 0 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    outline: 0 !important;
+    opacity: 0.7;
+    border-bottom: solid 2px #979797 !important;
+    &:focus{
+        // border: 0 !important;
+        // border-bottom: solid 0.3rem #705dfe !important;
+        border-image-slice: 1;
+        box-shadow: none;
+    };
+}
+@media (max-width:791px)  {
+
+    .recoverWallet{
+        background-color: unset !important;
+        width: 90%;
+        &__stepper{
+            width: 19rem !important;
+            margin-top: 8rem;
+            padding-bottom: 2.5rem;
+        }
+    } 
+}
+
+
+.splitted-input-gutter-row{
+    padding: 1rem !important;
+}

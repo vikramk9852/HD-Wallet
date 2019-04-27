@@ -1,0 +1,61 @@
+@import '../../../stylesheets/variables.scss';
+
+.cryptoMenu{
+    height: 100vh;
+    align-content: right;
+    overflow-y: auto;
+    background: transparent;
+    width: 170px;
+    float: left;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent !important;
+}
+.crypto{
+    color: gray;
+    padding-top: 7px;
+    padding-bottom: 0;
+    margin: 10px 0;
+    font-size: 15px;
+    height: 55px;
+    padding-right: 18px;
+    line-height: 20px;
+    text-align: right;
+    border-right: 2px solid transparent;
+    &:hover{
+        color: #cfcfcf;
+    }
+    &:active{
+        padding-top: 8px;
+    }
+}
+
+.cryptoSelected:hover{
+    color: #f3f3f3 !important;
+}
+
+@media(max-width: 491px){
+  .cryptoMenu{
+      width: 130px;
+  }
+}
+
+
+.thing-enter {
+    opacity: 0.01;
+    transition: opacity 4s ease-in;
+  }
+  
+  .thing-enter.thing-enter-active {
+    opacity: 1;
+  }
+  
+  .thing-leave {
+    opacity: 1;
+    transition: opacity 4s ease-in;
+  }
+  
+  .thing-leave.thing-leave-active {
+    opacity: 0.01;
+  }

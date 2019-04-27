@@ -1,0 +1,213 @@
+@import '../../../stylesheets/mixins.scss';
+
+.createWallet-box{
+    text-align: center;
+}
+.createWallet{
+    height: 100vh;
+    overflow-y: auto;
+    color: #aab1b7;
+    border-bottom-left-radius: 5.0rem;
+    border-bottom-right-radius: 5.0rem;
+    border-top-right-radius: 3.0rem;
+    border-top-left-radius: 3.0rem;
+    background-color: rgb(32, 38, 43);
+    @include absCenter;
+    &__gradientBox{
+        &__passPhrase{
+            padding: 3rem;
+            .gutter-row{
+                padding: 0.5rem;
+            }
+        }
+        &__passwordBox{
+            width: 100%;
+            display: block;
+            margin: 0 auto !important;
+            input{
+                background: transparent !important;
+                outline: none;
+                border: none;
+                text-align: center;
+                border-bottom: 1px solid #aab1b7;
+                border-radius: 0;
+                width: 80%;
+                padding: 0px !important;
+                height: 25px;
+                font-size: 20px;
+                &:hover, &:focus{
+                    outline: none;
+                }
+                
+                
+            }
+        }
+    }
+
+    &__success{
+        padding: 3rem;
+        img{
+            margin-top: 5rem;
+            padding: 1.5rem;
+        }
+    }
+
+    &__responseButton{
+        margin: 0 auto !important;
+        width: 100%;
+        &_box{
+            display: block;
+            margin: auto;
+        }
+        padding-bottom: 3rem;
+        .leftButton{
+            // margin-right: 10px;
+            float: right;
+        }
+        .rightButton{
+            // margin-left: 10px;
+            float: left;
+        }
+
+
+    }
+
+    &__textBody{
+        // padding-left: 15px;
+        // padding-right: 15px;
+        opacity: 0.5;
+        width: 68%;
+        margin: auto;
+
+    }
+
+    &__textHead{
+        padding-bottom: 0.2rem; 
+        // font-size: 40px;
+    }
+
+    &__stepper{
+        width: 25rem !important;
+        margin: 100px auto 0 auto;
+        padding-bottom: 2.5rem;
+    }
+
+}
+
+.passPhraseBox{ 
+    width: 40px;
+    height: 2rem;
+    border-radius: 0.3rem;
+    background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+}
+
+.passPhraseText{  
+    height: 2rem;
+    width: 7rem;
+    line-height: 2rem;
+    border-radius: 0.3rem;
+    background-color: black;
+    // text-align: center;
+    // padding-left: 5rem;
+    font-size: 14px;
+}
+
+.line:before {
+    content: '';
+    position: absolute;
+    margin-left: 10%;
+    top: 50%;
+    left: 0;
+    border-top: 1px solid #979797;
+    width: 80%;
+    height: 3px;
+}
+
+.centerBox{
+    font-size: 14px;
+    padding: 5px;
+    opacity: 0.5;
+    color: #222222;
+
+}
+
+.gutter-row{
+    padding:0.5rem 0;
+}
+
+@media (max-width: 481px){
+    .createWallet__textBody{
+        width: 100%;
+    }
+}
+
+h1{
+    font-size: 2rem;
+    color: gray;
+}
+
+@media (max-width:791px)  {
+
+    .createWallet{
+        background-color: unset !important;
+        width: 90%;
+        &__stepper{
+            width: 19rem !important;
+            margin-top: 8rem;
+            padding-bottom: 2.5rem;
+        }
+    }
+
+    .passPhraseBox{
+        width: 30px;
+    }   
+}
+
+.createWallet__responseButton_box_button{
+    width: 200px;    
+    cursor: pointer;
+    border: 2px gray;
+    border-radius: 40px !important;
+    box-sizing: border-box;
+    color: #f3f3f3;
+    display: block;
+    font: 1.125rem 'Oswald', Arial, sans-serif; 
+    height: 48px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    padding: 2px;
+    text-decoration: none;
+    width: 200px;
+    z-index: 2;
+    opacity: 0.7;
+    &:hover{    
+        opacity: 1;
+        color: #fff;
+    }
+    &:active,&:focus{
+        background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+        border: none !important;
+        outline: none;
+    }
+
+    // span{    
+    //     align-items: center;
+    //     border-radius: 40px;
+    //     display: flex;
+    //     justify-content: center;
+    //     height: 100%;
+    //     transition: background .1s ease;
+    //     width: 100%;
+    
+    //     &:active{
+    //         background: transparent;
+    //         transition: 0.1ms;
+    //     }
+    // }
+}

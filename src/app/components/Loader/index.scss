@@ -1,0 +1,5 @@
+@import '../../../stylesheets/mixins.scss';
+
+.drawing{
+    @include absCenter;
+}

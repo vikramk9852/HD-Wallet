@@ -1,0 +1,86 @@
+@import '../../../stylesheets/index.scss';
+
+.detailsTab{
+    margin: 0 auto !important;
+    display: flow-root;
+    height: 100vh;
+    overflow-y: auto;
+    // margin-left: 170px !important;
+    // max-width: 520px;
+    .buttons{
+        margin: 0 auto;
+        max-width: 520px;
+    }
+
+    .cryptoIcon{
+        margin: 15px auto;
+    }
+
+    .cryptoCurrency{
+        margin: 0 auto;
+        font-size: 30px;
+        line-height: 1;
+        font-family: monospace sans-serif;
+        text-transform: uppercase;
+        .cryptoAvailable{
+            font-size: 50px
+        }
+    }
+
+    .defaultCurrency{
+        font-size: 20px;
+        color: wheat;
+    }
+
+    .sendButton, .receiveButton{
+        margin: 20px auto 30px auto;
+    }
+    
+    .ant-collapse, .ant-collapse-borderless{
+        background-color: transparent;
+    }
+
+    .ant-collapse-header{
+        border-bottom: solid 0.5px gray;
+        text-align: left;
+        padding-left: 15px !important;
+        color: gray !important;
+    }
+
+    .ant-collapse-item, .ant-collapse-item-active{
+        border-bottom: none !important;
+        opacity: 0.5;
+    }
+
+    .ant-collapse .ant-collapse-item .ant-collapse-header .anticon {
+        left: initial;
+        right: 16px;
+    }
+
+    .descriptionText{
+        color: gray;
+    }
+
+    .ant-table-placeholder{
+        border: none;
+        background: transparent;
+    }
+    
+    .description{
+        // max-height: 300px;
+        height: 45vh;
+        overflow: auto;
+    }
+
+    .transactionModal{
+        @include absCenter;
+    }
+
+    @media(max-width: 991px){
+        .cryptoIcon{
+            margin-top: 50px;
+        }
+
+    }
+}
+
