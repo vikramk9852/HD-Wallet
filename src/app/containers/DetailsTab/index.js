@@ -8,7 +8,6 @@ import "antd/dist/antd.css";
 import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
 import Loader from '../../components/Loader';
 import * as CryptoCompare from '../../utils/CryptoCompare';
-
 const Panel = Collapse.Panel;
 
 const importAll = require =>
@@ -18,7 +17,7 @@ const importAll = require =>
     }, {});
 
 const images = importAll(
-    require.context("../../../assets/images", false, /\.(svg)$/)
+    require.context("../../../../node_modules/cryptocurrency-icons/svg/color", false, /\.(svg)$/)
 );
 const noOfCryptos = 13;
 
@@ -151,7 +150,7 @@ class DetailsTab extends Component {
                             <Row gutter={24} className="detailsTab">
                                 <Col align="middle">
                                     <div className="cryptoIcon">
-                                        <img width="82px" onClick={this.toggleCryptoMenu} src={images[`${this.state.currency.toUpperCase()}.svg`]} />
+                                        <img width="82px" onClick={this.toggleCryptoMenu} src={images[`${this.state.currency}.svg`]} />
                                     </div>
                                 </Col>
                                 <Col align="middle">

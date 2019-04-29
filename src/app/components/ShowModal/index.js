@@ -19,7 +19,7 @@ const importAll = require =>
     }, {});
 
 const images = importAll(
-    require.context("../../../assets/images", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../../../node_modules/cryptocurrency-icons/svg/color", false, /\.(png|jpe?g|svg)$/)
 );
 
 const textArray = ["COPY THIS ADDRESS", "PRINT THIS ADDRESS", "EMAIL THIS ADDRESS", "VIEW ON BLOCKCHAIN"];
@@ -147,7 +147,7 @@ class ShowModal extends Component {
                     closable={true}
                     width="720px"
                 >
-                    <img className="modalLogo" width="82px" src={images[`${this.state.currency.toUpperCase()}.svg`]} />
+                    <img className="modalLogo" width="82px" src={images[`${this.state.currency}.svg`]} />
                     {
                         this.props.buttonText === "send" ?
                             <div>
