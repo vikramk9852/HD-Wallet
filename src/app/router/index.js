@@ -8,45 +8,50 @@ import LandingPage from '../containers/LandingPage';
 import CreateWallet from '../containers/CreateWallet';
 import RecoverWallet from '../containers/RecoverWallet';
 import Login from '../containers/Login';
+import Settings from '../containers/Settings';
 import './index.scss';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 class Router extends React.Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state={
+		this.state = {
 			landingPage: false
 		}
 	}
-
-	componentWillMount(){
-		let hash = window.location.hash
-
-		if(localStorage.getItem("hashedPassword") !== null){
-			this.props.history.push("/login");
-			return ;
+	componentWillMount() {
+		if (localStorage.length === 0) {
+			this.props.history.push("/")
 		}
+	}
+	componentDidMount() {
 
-		if(hash === "#/recover" || hash === "#/" || hash === "#/createwallet" || hash === "#/login"){
-			this.setState({landingPage: true});
-		}
-		else{
-			this.setState({landingPage: false});
+		if (this.isLoginPage()) {
+			let status = localStorage.getItem("masterSeed");
+			if (status === null) {
+				//navigation to launch screen
+				this.props.history.push('/')
+			}
+			else {
+				//navigation to login screen
+				this.props.history.push('/login')
+			}
 		}
 	}
 
-	componentWillReceiveProps(nextProps){
-		if(this.props != nextProps){
-			let hash = window.location.hash
-			if(hash === "#/recover" || hash === "#/" || hash === "#/createwallet" || hash === "#/login"){
-				this.setState({landingPage: true});
-			}
-			else{
-				this.setState({landingPage: false});
-			}
-		}
+	isLoginPage() {
+		let currentPage = window.location.hash;
+		currentPage = currentPage.replace("#", "");
+		currentPage = currentPage.split('?')[0];
+		console.log(currentPage)
+		return currentPage === "" || currentPage === "/" || currentPage === "/login"
+	}
+
+	landingPage = () => {
+		let hash = window.location.hash;
+		return hash === "#/recover" || hash === "#/" || hash === "#/createwallet" || hash === "#/login" ;
 	}
 
 	render() {
@@ -54,7 +59,7 @@ class Router extends React.Component {
 		return (
 			<Layout className="uiContainer">
 				<Layout className="mainLayout">
-					{window.innerWidth > 769 && !this.state.landingPage && <LeftMenu renderRight={this.menuItemClick} />}
+					{window.innerWidth > 769 && !this.landingPage() && <LeftMenu renderRight={this.menuItemClick} />}
 					<Content style={{ overflow: 'initial' }}>
 						<Switch>
 							<Route exact path='/' component={LandingPage} />
@@ -62,6 +67,7 @@ class Router extends React.Component {
 							<Route path='/createwallet' component={CreateWallet} />
 							<Route path='/recover' component={RecoverWallet} />
 							<Route path='/login' component={Login} />
+							<Route path='/settings' component={Settings} />
 						</Switch >
 					</Content>
 				</Layout>

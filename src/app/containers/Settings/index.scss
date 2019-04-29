@@ -1,0 +1,59 @@
+@import '../../../stylesheets/mixins.scss';
+
+
+.settingContainer{
+    .ant{
+        &-menu{
+            &-item{
+                margin: 5px;
+            }
+
+            &-light{
+                border: none !important;
+            }
+        }
+
+        &-select{
+
+            &-arrow{
+                color: gainsboro;
+            }
+
+            color: white;
+            &-dropdown-menu{
+                background-color: #0e1012 !important;
+                &-item-selected{
+                    background-color: none;
+                }
+            }
+            &-selection{
+                border: none;
+                background-color: #0e1012;
+                height: 40px;
+                &__rendered{
+                    line-height: 40px;
+                }
+            }
+        }
+    }
+    margin: 50px 0 0 50px;
+
+    &__logout{
+        margin: 30px auto;
+        width: 400px;
+        height: 400px;
+        background-color: rgb(32, 38, 43);
+        border-bottom-left-radius: 5.0rem;
+        border-bottom-right-radius: 5.0rem;
+        border-top-right-radius: 3.0rem;
+        border-top-left-radius: 3.0rem;
+
+    }
+}
+
+.ant-select-dropdown-menu{
+    background-color: #0e1012;
+    &-item{
+        color: white;
+    }
+}

@@ -72,6 +72,12 @@
         overflow: auto;
     }
 
+    .noTransaction{
+        font-size: 40px;
+        color: gray;
+        margin-top: 50px;
+    }
+
     .transactionModal{
         @include absCenter;
     }
@@ -81,6 +87,10 @@
             margin-top: 50px;
         }
 
+    }
+    .ant-table-row-expand-icon{
+        background-color: gray;
+        color: black;
     }
 }
 

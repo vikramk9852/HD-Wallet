@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Row, Col, Collapse, Table } from 'antd';
 import ShowModal from '../../components/ShowModal';
 import BorderedButton from '../../components/BorderedButton';
-import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
+import { cryptoCurrencies, cryptoColor, currencySymbols } from '../../constants/cryptos';
 import './index.scss';
 import "antd/dist/antd.css";
-import * as BlockchainInteraction from '../../utils/SubmitTransactions';
+import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
 import Loader from '../../components/Loader';
 import * as CryptoCompare from '../../utils/CryptoCompare';
-
 
 const Panel = Collapse.Panel;
 
@@ -39,7 +38,6 @@ class DetailsTab extends Component {
     }
 
     componentDidMount() {
-
         this.setCrypto();
     }
 
@@ -66,27 +64,36 @@ class DetailsTab extends Component {
     }
 
     setTableData = () => {
-
-        BlockchainInteraction.Ethereum.getTransaction().then(res => {
+        let selectedCrypto = window.location.href
+        selectedCrypto = selectedCrypto.split('?')[2] || 0;
+        let crypto = cryptoCurrencies[selectedCrypto].label;
+        let blockchainInteraction = BlockchainInteraction.getInstance(crypto);
+        if(blockchainInteraction === undefined){
+            this.setState({expandalbleDataSource: undefined});
+            return ;
+        }
+        blockchainInteraction.getTransaction().then(res => {
             let data = JSON.parse(res);
             data = data.result;
             data = data.reverse();
-            let dataSource = [];
+            let expandalbleDataSource = [];
             for (let i = 0; i < data.length; i++) {
-                data[i].value = BlockchainInteraction.Ethereum.fromWeiToEther(data[i].value);
-                dataSource.push({
+                data[i].value = blockchainInteraction.fromWeiToEther(data[i].value);
+                let description = { "to": data[i].to, "from": data[i].from, "txValue": data[i].value };
+
+                expandalbleDataSource.push({
                     key: `key${i + 2}`,
-                    transaction: data[i].hash,
-                    to: data[i].to,
-                    value: data[i].value
+                    txHash: data[i].hash,
+                    txValue: data[i].value,
+                    description: description
                 })
             }
-            this.setState({ dataSource: dataSource });
+            this.setState({ expandalbleDataSource: expandalbleDataSource });
         })
     }
 
     showTransactionDetails = (record) => {
-        let txHash = record.transaction;
+        let txHash = record.txHash;
         let url = `https://ropsten.etherscan.io/tx/${txHash}`
         window.open(url)
     }
@@ -96,44 +103,41 @@ class DetailsTab extends Component {
         selectedCrypto = selectedCrypto.split('?')[2] || 0;
         let crypto = cryptoCurrencies[selectedCrypto];
         let currency = crypto.currency.toUpperCase();
-        this.setState({ showLoading: true }, () => {
-            if (crypto.label === "Ethereum") {
-                BlockchainInteraction.Ethereum.getBalance().then(res => {
-                    CryptoCompare.convert(currency, "USD").then(value => {
+        let blockchainInteraction = BlockchainInteraction.getInstance(crypto.label);
+        if (blockchainInteraction !== undefined) {
+            this.setState({ showLoading: true }, () => {
+                blockchainInteraction.getBalance().then(res => {
+                    CryptoCompare.convert(currency, localStorage.getItem("defaultCurrency")).then(value => {
                         value = JSON.parse(value);
-                        let fiatValue = value[currency.toString()]["USD"] * res;
+                        let fiatValue = value[currency.toString()][localStorage.getItem("defaultCurrency")] * res;
                         fiatValue = fiatValue.toString();
                         this.setState({ fiatValue: fiatValue.substr(0, 6), showLoading: false });
                     })
                     res = res.toString();
                     this.setState({ cryptoValue: res.substr(0, 4) });
                 })
-                this.setTableData();
-            }
-            else {
-                this.setState({ cryptoValue: 0, showLoading: false, fiatValue: "0.00", dataSource: [] });
-            }
-        })
+            })
+        }
+        this.setTableData();
         this.cryptoCurrencyColor = cryptoColor[cryptoCurrencies[selectedCrypto].label]
         this.setState({ crypto: cryptoCurrencies[selectedCrypto].label, currency: cryptoCurrencies[selectedCrypto].currency })
     }
 
     render() {
-        const columns = [
+
+        const expandableColumns = [
             {
-                title: "To",
-                dataIndex: 'to',
-                key: 'to',
-            }, {
                 title: "Transaction Hash",
-                dataIndex: 'transaction',
-                key: 'transaction',
-            }, {
+                dataIndex: "txHash",
+                key: "txHash"
+            },
+            {
                 title: "Value",
-                dataIndex: "value",
-                key: "value",
+                dataIndex: "txValue",
+                key: "txValue"
             }
         ]
+        const defaultCurrency = localStorage.getItem("defaultCurrency")
 
         return (
             <div>
@@ -154,7 +158,7 @@ class DetailsTab extends Component {
                                     <div>
                                         <div className="cryptoCurrency" style={{ color: this.cryptoCurrencyColor }}>
                                             <span id="check" className="cryptoAvailable">{this.state.cryptoValue}</span><span>{this.state.currency}</span></div>
-                                        <div className="defaultCurrency">${this.state.fiatValue} USD</div>
+                                        <div className="defaultCurrency">{currencySymbols[defaultCurrency]}{this.state.fiatValue} {defaultCurrency}</div>
                                     </div>
                                 </Col>
                                 <div className="buttons">
@@ -188,19 +192,30 @@ class DetailsTab extends Component {
                                             </Panel>
                                             <Panel header="TRANSACTIONS" key="2" style={{ overflow: "auto" }}>
                                                 <Row>
-                                                    <Col className="transactionTable" style={{ maxWidth: window.innerWidth - 100 }}>
-                                                        <Table
-                                                            onRow={(record, rowIndex) => {
-                                                                return {
-                                                                    onClick: (event) => { this.showTransactionDetails(record) },
-                                                                };
-                                                            }}
-                                                            columns={columns}
-                                                            dataSource={this.state.dataSource}
-                                                            pagination={false}
-                                                            style={{ overflow: "scroll" }}
-                                                        // locale={{ emptyText: (<span>not available</span>) }}
-                                                        />
+                                                    <Col className="transactionTable">
+                                                        {
+                                                            this.state.expandalbleDataSource !== undefined ?
+                                                                <Table
+                                                                    onRow={(record, rowIndex) => {
+                                                                        return {
+                                                                            onClick: (event) => { this.showTransactionDetails(record) },
+                                                                        };
+                                                                    }}
+                                                                    columns={expandableColumns}
+                                                                    dataSource={this.state.expandalbleDataSource}
+                                                                    expandedRowRender={record => <div style={{ margin: 0, lineHeight: 1, cursor: "default" }}>
+                                                                        <p>{`To: ${record.description["to"]}`}</p>
+                                                                        <p>{`From: ${record.description["from"]}`}</p>
+                                                                        <p>{`Transaction Value: ${record.description["txValue"]}`}</p>
+                                                                    </div>
+                                                                    }
+                                                                    pagination={false}
+                                                                    style={{ overflow: "scroll" }}
+                                                                // locale={{ emptyText: (<span>not available</span>) }}
+                                                                />
+                                                                :
+                                                                <p className="noTransaction">{`No ${this.state.crypto} Transactions`}</p>
+                                                        }
                                                     </Col>
                                                 </Row>
                                             </Panel>

@@ -37,10 +37,10 @@ class LeftMenu extends Component {
     }
 
     calculateFiatValue = (event) => {
-        let value = event.target.value, fiat;
+        let value = event.target.value;
         let inputId = event.target.id;
-        console.log("value", value);
         if (isNaN(value[value.length - 1]) && value[value.length - 1] != '.') {
+            console.log("value", value);
             if(inputId === "fiat"){
                 this.setState({currencyValue: "0.00", fiatValue: value});
             }
@@ -51,30 +51,24 @@ class LeftMenu extends Component {
         }
 
         let currency = this.state.currency.toUpperCase()
-        if(inputId === "fiat"){
-            fiat = currency;
-            currency = "USD";
-            this.setState({fiatValue: value});
-        }
-        else{
-            fiat = "USD";
-            this.setState({currencyValue: value});
-        }
+        let fiat = localStorage.getItem("defaultCurrency");
         CryptoCompare.convert(currency, fiat).then((res) => {
-            console.log(currency, fiat)
             res = JSON.parse(res);
             let convertedValue = res[currency][fiat]
             if(inputId === "fiat"){
+                if(convertedValue != 0){
+                    convertedValue = 1/convertedValue;
+                }
                 let currencyValue = convertedValue * value;
                 currencyValue = currencyValue.toFixed(8);
                 currencyValue = currencyValue.toLocaleString();
-                this.setState({currencyValue: currencyValue});
+                this.setState({currencyValue: currencyValue, fiatValue: value});
             }
             else{
                 let fiatValue = convertedValue * value;
                 fiatValue = fiatValue.toFixed(2);
                 fiatValue = fiatValue.toLocaleString();
-                this.setState({ fiatValue: fiatValue });
+                this.setState({ fiatValue: fiatValue, currencyValue: value});
             }
             this.props.setTransactionValue(this.state.currencyValue);
         })

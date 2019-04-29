@@ -159,7 +159,7 @@ class ShowModal extends Component {
                                     <InputLine setTransactionValue={(transactionValue) => this.setTransactionValue(transactionValue)} style={{ marginBotto: "0px !important" }} value="0.00" />
                                     <span style={{ color: cryptoColor[this.state.crypto] }} className="transactionCurrency">{this.state.currency.toUpperCase()}</span>
                                     <span style={{ color: "white", top: "41px" }} className="transactionCurrency">
-                                        USD
+                                    {localStorage.getItem("defaultCurrency")}
                                 </span></div>
                                 <div className="sendCryptoButton"><BorderedButton text="Send" onClick={this.handleOk} /></div>
                             </div>

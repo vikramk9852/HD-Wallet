@@ -1,8 +1,6 @@
 
 export var IMAGE_PATH = "node_modules/cryptocurrency-icons/svg/color"
 
-
-
 export var cryptoCurrencies = [
     {"label":"0x","currency":"zrx"},
     {"label":"Augur","currency":"rep"},
@@ -36,3 +34,21 @@ export var cryptoColor = {
    "Ethereum Classic": "#58CD87",
    "Litecoin": "#AEAEAE"
 }
+
+export var currencySymbols = {
+    'USD': '$', // US Dollar
+    'EUR': '€', // Euro
+    'CRC': '₡', // Costa Rican Colón
+    'GBP': '£', // British Pound Sterling
+    'ILS': '₪', // Israeli New Sheqel
+    'INR': '₹', // Indian Rupee
+    'JPY': '¥', // Japanese Yen
+    'KRW': '₩', // South Korean Won
+    'NGN': '₦', // Nigerian Naira
+    'PHP': '₱', // Philippine Peso
+    'PLN': 'zł', // Polish Zloty
+    'PYG': '₲', // Paraguayan Guarani
+    'THB': '฿', // Thai Baht
+    'UAH': '₴', // Ukrainian Hryvnia
+    'VND': '₫', // Vietnamese Dong
+};

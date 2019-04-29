@@ -28,9 +28,9 @@ class Statistics extends Component {
 				title: "Icon",
 				dataIndex: 'icon',
 				key: 'icon',
-				width: '30%',
-				
-			}, {
+				width: '20%',
+			}, 
+			{
 				title: "MarketCap",
 				dataIndex: 'marketCap',
 				key: 'marketCap',
@@ -68,11 +68,11 @@ class Statistics extends Component {
 			let cryptoCurrency = cryptoCurrencies[selectedCrypto]
 			dataSource.push({
 				key: `row${i}`,
-				icon: <div><img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{paddingRight:"10px"}}/>{cryptoCurrency.label}</div>,
+				icon: <div><img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{paddingRight:"10px"}}/><p style={{display: "inline"}}>{cryptoCurrency.label}</p></div>,
 				marketCap: "MarketCap",
-				currency: cryptoCurrency.currency,
+				currency: <d style={{color: cryptoColor[cryptoCurrency.label]}}>{cryptoCurrency.currency.toUpperCase()}</d>,
 				value: "Value",
-				percent: "Percent",
+				percent: "0%",
 				onMouseEnter: this.mouseEnter
 			})
 		}

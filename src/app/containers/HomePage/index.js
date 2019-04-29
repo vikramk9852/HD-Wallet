@@ -6,7 +6,7 @@ import Welcome from '../Welcome';
 import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
 import CryptoMenu from '../../components/CryptoMenu';
 import DetailsTab from '../DetailsTab';
-import Statistics from '../Statistics';
+import Settings from '../Settings';
 import Loader from '../../components/Loader';
 import * as WaitLogo from '../../../assets/images/orb.gif';
 import * as BlockchainInteraction from '../../utils/SubmitTransactions';
@@ -81,6 +81,9 @@ class HomePage extends Component {
                         }
                     </div>
                 )
+
+            case "settings":
+                return <Settings />
             default:
             // return 
         }
