@@ -106,6 +106,7 @@ function generateWallet(mnemonic, password){
         seed.then(function(result){
             result = result.toString('hex');
             localStorage.setItem("masterSeed", result);
+            localStorage.setItem("defaultCurrency", "USD");
             resolve(result);
         },
         function(err){
