@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
 import './index.scss';
 import "antd/dist/antd.css";
 import Welcome from '../Welcome';
@@ -8,7 +7,6 @@ import CryptoMenu from '../../components/CryptoMenu';
 import DetailsTab from '../DetailsTab';
 import Settings from '../Settings';
 import Loader from '../../components/Loader';
-import * as WaitLogo from '../../../assets/images/orb.gif';
 import * as BlockchainInteraction from '../../utils/SubmitTransactions';
 
 class HomePage extends Component {
