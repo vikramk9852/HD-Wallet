@@ -24,7 +24,6 @@ class Welcome extends Component {
 	handleOnClick = (action) => {
 		if(action === "recover"){
 			this.props.history.push("/recover");
-			console.log(window.location.hash)
 		}
 		else{
 			if(this.props.from === "landingPage"){

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Card, Menu, Select } from 'antd';
+import { Modal, Card, Menu, Select, message } from 'antd';
 import { withRouter } from 'react-router';
-import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
+import BordererdButtom from '../../components/BorderedButton';
+import * as WalletFunction from '../../utils/Wallet';
 import './index.scss';
 import "antd/dist/antd.css";
 
@@ -10,6 +11,7 @@ const Option = Select.Option;
 class Settings extends React.Component {
 	state = {
 		current: 'localization',
+		changePassword: false
 	}
 
 	handleClick = (e) => {
@@ -24,6 +26,29 @@ class Settings extends React.Component {
 
 	logout = () => {
 		this.props.history.push('/login');
+	}
+
+	changePassword = () => {
+		let oldPassword = document.getElementById("oldPassword").value;
+		let newPassword = document.getElementById("newPassword").value;
+		let confirmPassword = document.getElementById("confirmPassword").value;
+		if (newPassword === confirmPassword) {
+			let changeResult = WalletFunction.changePassword(oldPassword, newPassword)
+			if(changeResult){
+				message.success("Password Changed Successfully", 1);
+				this.setState({ changePassword: false });
+			}
+			else{
+				message.error("Please Enter correct Old password", 1);
+			}
+		}
+		else{
+			message.warning("New Passwords doesn't match", 1);
+		}
+	}
+
+	togglePasswordChangeModal = () => {
+		this.setState({ changePassword: !this.state.changePassword });
 	}
 
 	render() {
@@ -44,6 +69,32 @@ class Settings extends React.Component {
 				</Menu>
 				<button className="createWallet__responseButton_box_button"
 					style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)", bottom: "20%", position: "absolute" }}
+					onClick={this.togglePasswordChangeModal}
+				>
+					Change Password
+				</button>
+				{this.state.changePassword &&
+					<Modal
+						onCancel={this.togglePasswordChangeModal}
+						visible={true}
+						footer={null}
+						centered={true}
+						keyboard={true}
+						maskClosable={false}
+						closable={true}
+						width="720px"
+					>
+						<div className="settingContainer__changePassword">
+							<input id="oldPassword" type="password" autoFocus placeholder="Enter Your Old password" />
+							<input id="newPassword" type="password" placeholder="Enter New Password" />
+							<input id="confirmPassword" type="password" placeholder="Confirm New Password" />
+						</div>
+						<BordererdButtom text="Submit" onClick={() => { this.changePassword() }} />
+
+					</Modal>
+				}
+				<button className="createWallet__responseButton_box_button"
+					style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)", bottom: "10%", position: "absolute" }}
 					onClick={this.logout}
 				>
 					Logout

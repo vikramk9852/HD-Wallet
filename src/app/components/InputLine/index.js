@@ -35,7 +35,6 @@ class LeftMenu extends Component {
         let value = event.target.value;
         let inputId = event.target.id;
         if (isNaN(value[value.length - 1]) && value[value.length - 1] != '.') {
-            console.log("value", value);
             if(inputId === "fiat"){
                 this.setState({currencyValue: "0.00", fiatValue: value});
             }

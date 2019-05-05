@@ -1,3 +1,5 @@
+import { func } from "prop-types";
+
 var hdKey = require("ethereumjs-wallet/hdkey")
 // var Wallet = require("ethereumjs-wallet")
 var bip39 = require("bip39")
@@ -110,7 +112,6 @@ function generateWallet(mnemonic, password){
             resolve(result);
         },
         function(err){
-            console.log(err)
             reject(err);
         })
     })
@@ -120,10 +121,21 @@ function validateMnemonic(mnemonic){
     return bip39.validateMnemonic(mnemonic);
 }
 
+function changePassword(oldPassword, newPassword){
+    let hashedPassword = _pbkdf2.pbkdf2Sync(oldPassword, '', 2048, 64, 'sha512').toString('hex');
+    let retrievedPassword = localStorage.getItem("hashedPassword");
+    if(hashedPassword === retrievedPassword){
+        let newHashedPassword = _pbkdf2.pbkdf2Sync(newPassword, '', 2048, 64, 'sha512').toString('hex');
+        localStorage.setItem("hashedPassword", newHashedPassword);
+    }
+    return(hashedPassword === retrievedPassword);
+}
+
 export{
     createWallet,
     generateWallet,
     logIn,
     restoreWallet,
-    validateMnemonic
+    validateMnemonic,
+    changePassword
 }

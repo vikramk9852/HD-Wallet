@@ -18,10 +18,8 @@ const importAll = require =>
     }, {});
 
 const images = importAll(
-    require.context("../../../../node_modules/cryptocurrency-icons/svg/color", false, /\.(svg)$/)
+    require.context("../../../../src/assets/images", false, /\.(svg)$/)
 );
-const noOfCryptos = 13;
-
 
 class DetailsTab extends Component {
 
@@ -96,11 +94,10 @@ class DetailsTab extends Component {
         if (this.blockchainInteraction !== undefined) {
             this.setState({ showLoading: true }, () => {
                 this.blockchainInteraction.getBalance().then(res => {
-                    debugger;
-                    console.log(res);
                     CryptoCompare.convert(currency, localStorage.getItem("defaultCurrency")).then(value => {
                         value = JSON.parse(value);
                         let fiatValue = value[currency.toString()][localStorage.getItem("defaultCurrency")] * res;
+                        fiatValue = parseFloat(fiatValue);
                         fiatValue = fiatValue.toString();
                         this.setState({ fiatValue: fiatValue.substr(0, 6), showLoading: false });
                     })
@@ -108,12 +105,11 @@ class DetailsTab extends Component {
                     this.setState({ cryptoValue: res.substr(0, 4) });
                 }).catch(err => {
                     this.setState({ showLoading: false });
-                    console.log(err);
                 })
             })
         }
         else {
-            this.setState({ cryptoValue: "0.00", fiatValue: "0.00" });
+            this.setState({ cryptoValue: "0", fiatValue: "0.00" });
         }
         this.setTableData();
         this.cryptoCurrencyColor = cryptoColor[cryptoCurrencies[selectedCrypto].label]
@@ -156,7 +152,6 @@ class DetailsTab extends Component {
                 key: "txValue"
             }
         ]
-        console.log(this.state.crypto)
         const defaultCurrency = localStorage.getItem("defaultCurrency")
 
         return (
@@ -171,7 +166,7 @@ class DetailsTab extends Component {
                             <Row gutter={24} className="detailsTab">
                                 <Col align="middle">
                                     <div className="cryptoIcon">
-                                        <img width="80px" onClick={this.toggleCryptoMenu} src={images[`${this.state.currency}.svg`]} />
+                                        <img width="80px" onClick={this.toggleCryptoMenu} src={images[`${this.state.currency.toUpperCase()}.svg`]} />
                                     </div>
                                 </Col>
                                 <Col align="middle">

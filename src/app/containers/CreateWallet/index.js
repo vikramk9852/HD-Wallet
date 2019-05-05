@@ -87,7 +87,6 @@ class CreateWallet extends Component {
     }
 
     goToInitialStep = () => {
-        console.log('this.state.stepNo', this.state.stepNo)
         if (this.state.stepNo === 1)
             this.props.history.push('/');
     }

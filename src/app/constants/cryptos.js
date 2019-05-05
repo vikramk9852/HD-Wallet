@@ -14,10 +14,11 @@ export var cryptoCurrencies = [
     {"label":"DigiByte", "currency":"dgb"},
     {"label":"Ethereum", "currency":"eth"},
     {"label":"Ethereum Classic","currency":"etc"},
-    {"label":"Litecoin","currency":"ltc"}
+    {"label":"Litecoin","currency":"ltc"},
+    {"label":"Ripple", "currency": "xrp"}
 ];
 
-
+export var noOfCrypto = 14;
 
 export var cryptoColor = {
    "0x": "#AEAEAE",
@@ -32,7 +33,8 @@ export var cryptoColor = {
    "DigiByte": "#096BC7",
    "Ethereum": "#6876E6",
    "Ethereum Classic": "#58CD87",
-   "Litecoin": "#AEAEAE"
+   "Litecoin": "#AEAEAE",
+   "Ripple": "#00AAE4"
 }
 
 export var currencySymbols = {

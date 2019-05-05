@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import './index.scss';
 import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
 
-const noOfCryptos = 13;
-
 class Button extends Component {
 
   constructor(props){

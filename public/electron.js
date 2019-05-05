@@ -1,18 +1,18 @@
 const { app, BrowserWindow } = require('electron')
+const path = require('path')
 
 let win;
 
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 800, 
+    width: 990, 
     height: 768,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#151719',
     icon: `file://${__dirname}/dist/assets/logo.png`
   })
 
-// console.log(`file://${path.join(__dirname, '../build/index.html')}`)
-  win.loadURL('http://localhost:3000/#/')
+  win.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
 
   //// uncomment below to open the DevTools.
   // win.webContents.openDevTools()

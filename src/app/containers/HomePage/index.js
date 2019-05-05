@@ -45,7 +45,6 @@ class HomePage extends Component {
         }
         this.setState({ showLoading: true }, () => {
             blockchainInteraction.getBalance().then(res => {
-                console.log("cryptoValue", res)
                 res = res.toString();
                 this.setState({ cryptoValue: res.substr(0, 4), showLoading: false });
             })
@@ -54,7 +53,6 @@ class HomePage extends Component {
 
     renderHomePage = () => {
         let hash = window.location.hash
-        console.log(hash)
         hash = hash.split('?')[1];
         switch (hash) {
 

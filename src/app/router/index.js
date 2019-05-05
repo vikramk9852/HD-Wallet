@@ -45,7 +45,6 @@ class Router extends React.Component {
 		let currentPage = window.location.hash;
 		currentPage = currentPage.replace("#", "");
 		currentPage = currentPage.split('?')[0];
-		console.log(currentPage)
 		return currentPage === "" || currentPage === "/" || currentPage === "/login"
 	}
 
@@ -55,7 +54,6 @@ class Router extends React.Component {
 	}
 
 	render() {
-		console.log("render", this.state.landingPage)
 		return (
 			<Layout className="uiContainer">
 				<Layout className="mainLayout">

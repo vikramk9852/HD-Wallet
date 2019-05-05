@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Table, Icon } from 'antd';
 import { withRouter } from 'react-router';
-import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
+import { cryptoCurrencies, cryptoColor, noOfCrypto } from '../../constants/cryptos';
 import './index.scss';
 import "antd/dist/antd.css";
 
@@ -12,9 +12,8 @@ const importAll = require =>
 	}, {});
 
 const images = importAll(
-	require.context("../../../../node_modules/cryptocurrency-icons/svg/color", false, /\.(png|jpe?g|svg)$/)
+	require.context("../../../../src/assets/images", false, /\.(png|jpe?g|svg)$/)
 );
-const noOfCrypto = 13;
 
 class Statistics extends Component {
 
@@ -25,9 +24,9 @@ class Statistics extends Component {
 		}
 		this.columns = [
 			{
-				title: "Icon",
-				dataIndex: 'icon',
-				key: 'icon',
+				title: "Coin",
+				dataIndex: 'coin',
+				key: 'coin',
 				width: '20%',
 			}, 
 			{
@@ -68,7 +67,7 @@ class Statistics extends Component {
 			let cryptoCurrency = cryptoCurrencies[selectedCrypto]
 			dataSource.push({
 				key: `row${i}`,
-				icon: <div><img src={images[`${cryptoCurrency.currency}.svg`]} width="40px" style={{paddingRight:"10px"}}/><p style={{display: "inline"}}>{cryptoCurrency.label}</p></div>,
+				coin: <div><img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{paddingRight:"10px"}}/><p style={{display: "inline"}}>{cryptoCurrency.label}</p></div>,
 				marketCap: "MarketCap",
 				currency: <d style={{color: cryptoColor[cryptoCurrency.label]}}>{cryptoCurrency.currency.toUpperCase()}</d>,
 				value: "Value",

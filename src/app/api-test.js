@@ -27,5 +27,4 @@ const fs = require('fs');
 //     console.log('API call error:', err.message);
 // });
 fs.readFile("/media/vikram/hdk/crypto-wallet/src/app/response.json", function(err, data){
-    console.log(data.toString())
 })

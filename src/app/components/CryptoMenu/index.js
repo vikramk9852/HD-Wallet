@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
+import { cryptoCurrencies, cryptoColor, noOfCrypto } from '../../constants/cryptos';
 import onClickOutside from 'react-onclickoutside'
 import './index.scss';
 import "antd/dist/antd.css";
 
-const noOfCryptos = 13;
 
 class CryptoMenu extends Component {
 
@@ -23,14 +22,12 @@ class CryptoMenu extends Component {
         let hash = window.location.href
         hash = hash.split('?')[2];
         this.cryptoItemClick(hash)
-        console.log(hash)
     }
 
     componentWillReceiveProps(props) {
         if (props.toggle && window.innerWidth < 491 && !this.state.showCryptoMenu) {
             this.setState({ showCryptoMenu: true }, ()=>{
                 let hash = window.location.href
-                console.log(hash)
                 hash = hash.split('?')[2];
                 this.cryptoItemClick(hash);
             });
@@ -81,7 +78,7 @@ class CryptoMenu extends Component {
                 {
                     (this.state.showCryptoMenu || this.props.toggleMenu) &&
                     <div className="cryptoMenu" style={{ borderRight: `solid 2px ${cryptoColor[cryptoCurrencies[this.state.selected].label]}` }}>
-                        {this.renderCryptoList(noOfCryptos)}
+                        {this.renderCryptoList(noOfCrypto)}
                     </div>
                 }
             </div>

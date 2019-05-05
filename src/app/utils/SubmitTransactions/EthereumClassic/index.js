@@ -4,7 +4,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io
 const hdKey = require("ethereumjs-wallet/hdkey");
 const request = require("request");
 
-class Ethereum {
+class EthereumClassic {
 
     constructor(){
         
@@ -15,7 +15,7 @@ class Ethereum {
         let seed = localStorage.getItem("masterSeed");
         seed = Buffer.from(seed, 'hex');
         let masterKey = hdKey.fromMasterSeed(seed);
-        var path = "m/44'/60'/0'/0"
+        var path = "m/44'/61'/0'/0"
         var masterNode = masterKey.derivePath(path)
         var wallet = masterNode.deriveChild(0).getWallet()
         var address = wallet.getAddress().toString('hex');
@@ -70,48 +70,14 @@ class Ethereum {
     }
 
     getBalance() {
-        let that = this;
-        let address = this.getWalletInfo().address;
         return new Promise((resolve, reject) => {
-            web3.eth.getBalance(address, function (error, result) {
-                if (error) {
-                    reject(error);
-                }
-                result = that.fromWeiToEther(result);
-                resolve(result);
-            })
+            resolve(0);
         })
     }
 
     getTransaction() {
-        let address = this.getWalletInfo().address;
-        let that = this;
-        let url = `https://blockscout.com/eth/ropsten/api?module=account&action=txlist&address=0x${address}`;
         const promise = new Promise((resolve, reject) => {
-            request(url, function (error, response, body) {
-                if (error) {
-                    return reject(error);
-                }
-                
-                body = JSON.parse(body).result;
-                if(body.length == 0){
-                    return reject(0);
-                }
-                body = body.reverse();
-                let transactionData = [];
-                for (let i = 0; i < body.length; i++) {
-                    body[i].value = that.fromWeiToEther(body[i].value);
-                    let description = { "to": body[i].to, "from": body[i].from, "txValue": body[i].value };
-                    transactionData.push({
-                        key: `key${i + 2}`,
-                        txHash: body[i].hash,
-                        txValue: body[i].value,
-                        description: description
-                    })
-                }
-                resolve(transactionData)
-
-            })
+            reject(0);
         })
         return promise;
     }
@@ -125,4 +91,4 @@ class Ethereum {
     }
 }
 
-export default Ethereum;
+export default EthereumClassic;

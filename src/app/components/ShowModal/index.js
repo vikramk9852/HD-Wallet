@@ -20,7 +20,7 @@ const importAll = require =>
     }, {});
 
 const images = importAll(
-    require.context("../../../../node_modules/cryptocurrency-icons/svg/color", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../../../src/assets/images", false, /\.(png|jpe?g|svg)$/)
 );
 
 const textArray = ["COPY THIS ADDRESS", "PRINT THIS ADDRESS", "EMAIL THIS ADDRESS", "VIEW ON BLOCKCHAIN"];
@@ -57,7 +57,6 @@ class ShowModal extends Component {
 
     setTransactionValue(transactionValue) {
         this.setState({ transactionValue: transactionValue })
-        console.log(transactionValue);
     }
 
     onMouseEnter = (index) => {
@@ -119,7 +118,6 @@ class ShowModal extends Component {
                 this.props.hideModal();
             }).catch((err) => {
                 this.props.hideModal();
-                console.log(err)
             });
         })
     }
@@ -177,7 +175,7 @@ class ShowModal extends Component {
                             </Modal>
                         </div>
                     }
-                    <img className="modalLogo" width="82px" src={images[`${this.state.currency}.svg`]} />
+                    <img className="modalLogo" width="82px" src={images[`${this.state.currency.toUpperCase()}.svg`]} />
                     {
                         this.props.buttonText === "send" ?
                             <div>
