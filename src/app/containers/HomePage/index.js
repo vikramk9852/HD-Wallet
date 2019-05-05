@@ -7,7 +7,7 @@ import CryptoMenu from '../../components/CryptoMenu';
 import DetailsTab from '../DetailsTab';
 import Settings from '../Settings';
 import Loader from '../../components/Loader';
-import * as BlockchainInteraction from '../../utils/SubmitTransactions';
+import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
 
 class HomePage extends Component {
 
@@ -22,8 +22,8 @@ class HomePage extends Component {
     }
 
     toggleCryptoMenu = () => {
-        if(window.innerWidth < 491)
-        this.setState({ toggleMenu: true })
+        if (window.innerWidth < 491)
+            this.setState({ toggleMenu: true })
     }
 
     // componentDidMount() {
@@ -37,18 +37,18 @@ class HomePage extends Component {
     renderDetailsTab = () => {
         let selectedCrypto = window.location.href
         selectedCrypto = selectedCrypto.split('?')[2] || 0;
-        let crypto = cryptoCurrencies[selectedCrypto];
+        let crypto = cryptoCurrencies[selectedCrypto].label;
+        let blockchainInteraction = BlockchainInteraction.getInstance(crypto);
+        if (blockchainInteraction === undefined) {
+            this.setState({ cryptoValue: 0, showLoading: false });
+            return
+        }
         this.setState({ showLoading: true }, () => {
-            if (crypto.label === "Ethereum") {
-                BlockchainInteraction.Ethereum.getBalance().then(res => {
-                    console.log("cryptoValue", res)
-                    res = res.toString();
-                    this.setState({ cryptoValue: res.substr(0, 4), showLoading: false });
-                })
-            }
-            else {
-                this.setState({ cryptoValue: 0, showLoading: false });
-            }
+            blockchainInteraction.getBalance().then(res => {
+                console.log("cryptoValue", res)
+                res = res.toString();
+                this.setState({ cryptoValue: res.substr(0, 4), showLoading: false });
+            })
         });
     }
 
@@ -57,7 +57,7 @@ class HomePage extends Component {
         console.log(hash)
         hash = hash.split('?')[1];
         switch (hash) {
-            
+
             case "recover":
                 this.props.history.push("/recover");
                 break;

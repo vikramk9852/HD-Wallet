@@ -1,5 +1,5 @@
 {
-  "name": "blockchain",
+  "name": "crypto-wallet",
   "version": "0.1.0",
   "author": "vikram",
   "private": true,
@@ -31,6 +31,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-onclickoutside": "^6.8.0",
+    "react-qr-scanner": "0.0.8",
     "react-qr-svg": "^2.2.1",
     "react-redux": "^6.0.1",
     "react-responsive": "^6.1.1",
@@ -42,8 +43,8 @@
     "request-promise": "^4.2.4",
     "router": "^1.3.3",
     "truffle": "^5.0.11",
-    "web3": "^1.0.0-beta.52",
-    "unorm": "^1.3.3"
+    "unorm": "^1.3.3",
+    "web3": "^1.0.0-beta.52"
   },
   "devDependencies": {
     "electron-builder": "^20.39.0",

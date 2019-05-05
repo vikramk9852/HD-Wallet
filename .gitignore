@@ -7,3 +7,7 @@ build/
 dist/
 
 release-builds
+
+src/app/utils/SubmitTransactions/Bitcoin/blockchain.info.js
+
+src/app/utils/SubmitTransactions/Bitcoin/test.js

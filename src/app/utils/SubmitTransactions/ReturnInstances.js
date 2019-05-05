@@ -1,6 +1,7 @@
-const Interaction = require('../SubmitTransactions');
+import BlockchainInteraction from '../SubmitTransactions';
 
 export function getInstance(crypto) {
+    let Interaction = new BlockchainInteraction()
     switch (crypto) {
         case "0x":
             return Interaction.zrx;

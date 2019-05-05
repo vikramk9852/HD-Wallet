@@ -6,6 +6,7 @@ import { cryptoCurrencies, cryptoColor, currencySymbols } from '../../constants/
 import './index.scss';
 import "antd/dist/antd.css";
 import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
+import { CryptoDescription } from '../../constants/cryptoDescription';
 import Loader from '../../components/Loader';
 import * as CryptoCompare from '../../utils/CryptoCompare';
 const Panel = Collapse.Panel;
@@ -36,13 +37,21 @@ class DetailsTab extends Component {
         this.setCrypto = this.setCrypto.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        let selectedCrypto = window.location.href
+        selectedCrypto = selectedCrypto.split('?')[2] || 0;
+        let crypto = cryptoCurrencies[selectedCrypto].label;
+        this.blockchainInteraction = BlockchainInteraction.getInstance(crypto);
         this.setCrypto();
     }
 
     componentWillReceiveProps(props) {
         if (!this.props.toggle)
             this.props.toggleMenu();
+        let selectedCrypto = window.location.href
+        selectedCrypto = selectedCrypto.split('?')[2] || 0;
+        let crypto = cryptoCurrencies[selectedCrypto].label;
+        this.blockchainInteraction = BlockchainInteraction.getInstance(crypto);
         this.setCrypto();
     }
 
@@ -63,37 +72,19 @@ class DetailsTab extends Component {
     }
 
     setTableData = () => {
-        let selectedCrypto = window.location.href
-        selectedCrypto = selectedCrypto.split('?')[2] || 0;
-        let crypto = cryptoCurrencies[selectedCrypto].label;
-        let blockchainInteraction = BlockchainInteraction.getInstance(crypto);
-        if(blockchainInteraction === undefined){
-            this.setState({expandalbleDataSource: undefined});
-            return ;
+        if (this.blockchainInteraction === undefined) {
+            this.setState({ expandalbleDataSource: undefined, showLoading: false });
+            return;
         }
-        blockchainInteraction.getTransaction().then(res => {
-            let data = JSON.parse(res);
-            data = data.result;
-            data = data.reverse();
-            let expandalbleDataSource = [];
-            for (let i = 0; i < data.length; i++) {
-                data[i].value = blockchainInteraction.fromWeiToEther(data[i].value);
-                let description = { "to": data[i].to, "from": data[i].from, "txValue": data[i].value };
 
-                expandalbleDataSource.push({
-                    key: `key${i + 2}`,
-                    txHash: data[i].hash,
-                    txValue: data[i].value,
-                    description: description
-                })
-            }
-            this.setState({ expandalbleDataSource: expandalbleDataSource });
+        this.blockchainInteraction.getTransaction().then(res => {
+            this.setState({ expandalbleDataSource: res });
         })
     }
 
     showTransactionDetails = (record) => {
         let txHash = record.txHash;
-        let url = `https://ropsten.etherscan.io/tx/${txHash}`
+        let url = this.blockchainInteraction.getTransactionDetails(txHash);
         window.open(url)
     }
 
@@ -102,10 +93,11 @@ class DetailsTab extends Component {
         selectedCrypto = selectedCrypto.split('?')[2] || 0;
         let crypto = cryptoCurrencies[selectedCrypto];
         let currency = crypto.currency.toUpperCase();
-        let blockchainInteraction = BlockchainInteraction.getInstance(crypto.label);
-        if (blockchainInteraction !== undefined) {
+        if (this.blockchainInteraction !== undefined) {
             this.setState({ showLoading: true }, () => {
-                blockchainInteraction.getBalance().then(res => {
+                this.blockchainInteraction.getBalance().then(res => {
+                    debugger;
+                    console.log(res);
                     CryptoCompare.convert(currency, localStorage.getItem("defaultCurrency")).then(value => {
                         value = JSON.parse(value);
                         let fiatValue = value[currency.toString()][localStorage.getItem("defaultCurrency")] * res;
@@ -114,12 +106,40 @@ class DetailsTab extends Component {
                     })
                     res = res.toString();
                     this.setState({ cryptoValue: res.substr(0, 4) });
+                }).catch(err => {
+                    this.setState({ showLoading: false });
+                    console.log(err);
                 })
             })
+        }
+        else {
+            this.setState({ cryptoValue: "0.00", fiatValue: "0.00" });
         }
         this.setTableData();
         this.cryptoCurrencyColor = cryptoColor[cryptoCurrencies[selectedCrypto].label]
         this.setState({ crypto: cryptoCurrencies[selectedCrypto].label, currency: cryptoCurrencies[selectedCrypto].currency })
+    }
+
+    formatDescription = (description) => {
+        let address = this.blockchainInteraction.getWalletInfo().address;
+        let paragraphArray = [];
+        for (let key in description) {
+            if (description[key] === address) {
+                paragraphArray.push(
+                    <p>{key}: {description[key]} <text style={{ color: "green" }}>(SELF)</text></p>
+                )
+            }
+            else {
+                paragraphArray.push(
+                    <p>{key}: {description[key]}</p>
+                )
+            }
+        }
+        return (
+            <div style={{ margin: 0, lineHeight: 1, cursor: "default" }}>
+                {paragraphArray}
+            </div>
+        )
     }
 
     render() {
@@ -136,6 +156,7 @@ class DetailsTab extends Component {
                 key: "txValue"
             }
         ]
+        console.log(this.state.crypto)
         const defaultCurrency = localStorage.getItem("defaultCurrency")
 
         return (
@@ -150,7 +171,7 @@ class DetailsTab extends Component {
                             <Row gutter={24} className="detailsTab">
                                 <Col align="middle">
                                     <div className="cryptoIcon">
-                                        <img width="82px" onClick={this.toggleCryptoMenu} src={images[`${this.state.currency}.svg`]} />
+                                        <img width="80px" onClick={this.toggleCryptoMenu} src={images[`${this.state.currency}.svg`]} />
                                     </div>
                                 </Col>
                                 <Col align="middle">
@@ -173,10 +194,13 @@ class DetailsTab extends Component {
                                     </Col>
                                 </div>
                                 {this.state.showModal &&
-                                    <ShowModal crypto={this.state.crypto.toUpperCase()}
+                                    <ShowModal
+                                        crypto={this.state.crypto.toUpperCase()}
                                         buttonText={this.state.buttonText}
                                         hideModal={this.hideModal}
                                         refreshTransactionTable={this.setTableData}
+                                        crypto={this.state.crypto}
+                                        currency={this.state.currency}
                                     />
                                 }
                                 <div className="test">
@@ -184,14 +208,14 @@ class DetailsTab extends Component {
                                         <Collapse accordion bordered={false} >
                                             <Panel align="left" header="DESCRIPTION" key="1">
                                                 <p className="descriptionText">
-                                                    {"A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world."}
-                                                    {"A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world."}
-                                                    {"A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world."}
+                                                    {CryptoDescription[this.state.crypto].split("\n").map((i, key) => {
+                                                        return <text style={{color: "cornsilk"}} key={key}>{i}<br/></text>;
+                                                    })}
                                                 </p>
                                             </Panel>
                                             <Panel header="TRANSACTIONS" key="2" style={{ overflow: "auto" }}>
                                                 <Row>
-                                                    <Col className="transactionTable">
+                                                    <Col className="transactionTable" style={{ maxWidth: "80vw" }}>
                                                         {
                                                             this.state.expandalbleDataSource !== undefined ?
                                                                 <Table
@@ -202,12 +226,7 @@ class DetailsTab extends Component {
                                                                     }}
                                                                     columns={expandableColumns}
                                                                     dataSource={this.state.expandalbleDataSource}
-                                                                    expandedRowRender={record => <div style={{ margin: 0, lineHeight: 1, cursor: "default" }}>
-                                                                        <p>{`To: ${record.description["to"]}`}</p>
-                                                                        <p>{`From: ${record.description["from"]}`}</p>
-                                                                        <p>{`Transaction Value: ${record.description["txValue"]}`}</p>
-                                                                    </div>
-                                                                    }
+                                                                    expandedRowRender={record => this.formatDescription(record.description)}
                                                                     pagination={false}
                                                                     style={{ overflow: "scroll" }}
                                                                 // locale={{ emptyText: (<span>not available</span>) }}

@@ -59,6 +59,7 @@
 
     .descriptionText{
         color: gray;
+        text-align: left;
     }
 
     .ant-table-placeholder{
@@ -82,11 +83,20 @@
         @include absCenter;
     }
 
+    .transactionTable{
+        user-select: text;
+    }
+
     @media(max-width: 991px){
         .cryptoIcon{
             margin-top: 50px;
         }
 
+    }
+    @media (max-width: 491px) {
+        .transactionTable{
+            max-width: 100vw !important;
+        }
     }
     .ant-table-row-expand-icon{
         background-color: gray;

@@ -3,7 +3,7 @@ import { Input } from 'antd';
 import { withRouter } from 'react-router';
 import { cryptoCurrencies, cryptoColor } from '../../constants/cryptos';
 import * as CryptoCompare from '../../utils/CryptoCompare';
-import BlockchainInteraction from '../../utils/SubmitTransactions'
+import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
 import './index.scss';
 import "antd/dist/antd.css";
 
@@ -28,12 +28,7 @@ class LeftMenu extends Component {
 
     setToAddress=(event)=>{
         let toAddress = event.target.value;
-        if(BlockchainInteraction.Ethereum.validateAddress(toAddress)){
-            this.props.setToAddress(toAddress);
-        }
-        else{
-            this.setState({lineColor: "red"});
-        }
+        this.props.setToAddress(toAddress);
     }
 
     calculateFiatValue = (event) => {
