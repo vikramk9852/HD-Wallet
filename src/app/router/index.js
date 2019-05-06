@@ -57,7 +57,7 @@ class Router extends React.Component {
 		return (
 			<Layout className="uiContainer">
 				<Layout className="mainLayout">
-					{window.innerWidth > 769 && !this.landingPage() && <LeftMenu renderRight={this.menuItemClick} />}
+					{!this.landingPage() && <LeftMenu renderRight={this.menuItemClick} />}
 					<Content style={{ overflow: 'initial' }}>
 						<Switch>
 							<Route exact path='/' component={LandingPage} />

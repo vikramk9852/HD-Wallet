@@ -210,7 +210,7 @@ class DetailsTab extends Component {
                                             </Panel>
                                             <Panel header="TRANSACTIONS" key="2" style={{ overflow: "auto" }}>
                                                 <Row>
-                                                    <Col className="transactionTable" style={{ maxWidth: "80vw" }}>
+                                                    <Col className="transactionTable" style={{ maxWidth: "70vw" }}>
                                                         {
                                                             this.state.expandalbleDataSource !== undefined ?
                                                                 <Table
@@ -224,7 +224,6 @@ class DetailsTab extends Component {
                                                                     expandedRowRender={record => this.formatDescription(record.description)}
                                                                     pagination={false}
                                                                     style={{ overflow: "scroll" }}
-                                                                // locale={{ emptyText: (<span>not available</span>) }}
                                                                 />
                                                                 :
                                                                 <p className="noTransaction">{`No ${this.state.crypto} Transactions`}</p>

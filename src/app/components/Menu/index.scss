@@ -60,3 +60,9 @@
     color: #cfcfcf;
 }
 
+@media(max-width: 769px){
+    .leftMenu{
+        display: none;
+    }
+}
+
