@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Card, Menu, Select, message } from 'antd';
+import { Modal, Card, Menu, Select, message, Row, Col } from 'antd';
 import { withRouter } from 'react-router';
 import BordererdButtom from '../../components/BorderedButton';
 import * as WalletFunction from '../../utils/Wallet';
@@ -34,15 +34,15 @@ class Settings extends React.Component {
 		let confirmPassword = document.getElementById("confirmPassword").value;
 		if (newPassword === confirmPassword) {
 			let changeResult = WalletFunction.changePassword(oldPassword, newPassword)
-			if(changeResult){
+			if (changeResult) {
 				message.success("Password Changed Successfully", 1);
 				this.setState({ changePassword: false });
 			}
-			else{
+			else {
 				message.error("Please Enter correct Old password", 1);
 			}
 		}
-		else{
+		else {
 			message.warning("New Passwords doesn't match", 1);
 		}
 	}
@@ -55,24 +55,6 @@ class Settings extends React.Component {
 		const defaultCurrency = localStorage.getItem("defaultCurrency") || "USD";
 		return (
 			<div className="settingContainer">
-				<Menu
-					onClick={this.handleClick}
-					selectedKeys={[this.state.current]}
-					mode="horizontal"
-				>
-					<Menu.Item key="localization">
-						Localization
-        			</Menu.Item>
-					<Menu.Item key="theme">
-						Theme
-					</Menu.Item>
-				</Menu>
-				<button className="createWallet__responseButton_box_button"
-					style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)", bottom: "20%", position: "absolute" }}
-					onClick={this.togglePasswordChangeModal}
-				>
-					Change Password
-				</button>
 				{this.state.changePassword &&
 					<Modal
 						onCancel={this.togglePasswordChangeModal}
@@ -93,12 +75,37 @@ class Settings extends React.Component {
 
 					</Modal>
 				}
-				<button className="createWallet__responseButton_box_button"
-					style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)", bottom: "10%", position: "absolute" }}
-					onClick={this.logout}
+				<Menu
+					onClick={this.handleClick}
+					selectedKeys={[this.state.current]}
+					mode="horizontal"
 				>
-					Logout
-				</button>
+					<Menu.Item key="localization">
+						Localization
+        			</Menu.Item>
+					<Menu.Item key="theme">
+						Theme
+					</Menu.Item>
+				</Menu>
+				<Row style={{position: "absolute", bottom: "10%"}}>
+					<Col style={{padding: "10px"}}>
+						<button className="createWallet__responseButton_box_button"
+							style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)"}}
+							onClick={this.togglePasswordChangeModal}
+						>
+							Change Password
+							
+						</button>
+					</Col>
+					<Col>
+						<button className="createWallet__responseButton_box_button"
+							style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)"}}
+							onClick={this.logout}
+						>
+							Logout
+						</button>
+					</Col>
+				</Row>
 				{
 					this.state.current === "logout" ?
 						<Card

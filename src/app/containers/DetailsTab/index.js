@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Collapse, Table } from 'antd';
+import { Row, Col, Collapse, Table, Tooltip } from 'antd';
 import ShowModal from '../../components/ShowModal';
 import BorderedButton from '../../components/BorderedButton';
 import { cryptoCurrencies, cryptoColor, currencySymbols } from '../../constants/cryptos';
@@ -77,6 +77,8 @@ class DetailsTab extends Component {
 
         this.blockchainInteraction.getTransaction().then(res => {
             this.setState({ expandalbleDataSource: res });
+        }).catch(err=>{
+            this.setState({expandalbleDataSource: undefined});
         })
     }
 
@@ -99,19 +101,19 @@ class DetailsTab extends Component {
                         let fiatValue = value[currency.toString()][localStorage.getItem("defaultCurrency")] * res;
                         fiatValue = parseFloat(fiatValue);
                         fiatValue = fiatValue.toString();
-                        this.setState({ fiatValue: fiatValue.substr(0, 6), showLoading: false });
+                        this.setState({ fiatValue: fiatValue, showLoading: false });
                     })
                     res = res.toString();
-                    this.setState({ cryptoValue: res.substr(0, 4) });
+                    this.setState({ cryptoValue: res });
                 }).catch(err => {
-                    this.setState({ showLoading: false });
+                    this.setState({ showLoading: false, fiatValue: "0.00", cryptoValue: 0 });
                 })
+                this.setTableData();
             })
         }
         else {
             this.setState({ cryptoValue: "0", fiatValue: "0.00" });
         }
-        this.setTableData();
         this.cryptoCurrencyColor = cryptoColor[cryptoCurrencies[selectedCrypto].label]
         this.setState({ crypto: cryptoCurrencies[selectedCrypto].label, currency: cryptoCurrencies[selectedCrypto].currency })
     }
@@ -136,6 +138,10 @@ class DetailsTab extends Component {
                 {paragraphArray}
             </div>
         )
+    }
+
+    formatSubstr = (string, value) =>{
+        return string.substr(0, value);
     }
 
     render() {
@@ -172,8 +178,8 @@ class DetailsTab extends Component {
                                 <Col align="middle">
                                     <div>
                                         <div className="cryptoCurrency" style={{ color: this.cryptoCurrencyColor }}>
-                                            <span id="check" className="cryptoAvailable">{this.state.cryptoValue}</span><span>{this.state.currency}</span></div>
-                                        <div className="defaultCurrency">{currencySymbols[defaultCurrency]}{this.state.fiatValue} {defaultCurrency}</div>
+                                           <Tooltip title={this.state.cryptoValue}><span id="check" className="cryptoAvailable">{this.formatSubstr(this.state.cryptoValue, 4)}</span><span>{this.state.currency}</span></Tooltip></div>
+                                        <div className="defaultCurrency"><Tooltip placement="bottom" title={this.state.fiatValue}>{currencySymbols[defaultCurrency]}{this.formatSubstr(this.state.fiatValue, 6)} {defaultCurrency}</Tooltip></div>
                                     </div>
                                 </Col>
                                 <div className="buttons">

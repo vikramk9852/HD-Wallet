@@ -41,6 +41,12 @@
   }
 }
 
+@media(min-width: 492px){
+  .cryptoMenu{
+    display: block !important;
+  }
+}
+
 
 .thing-enter {
     opacity: 0.01;

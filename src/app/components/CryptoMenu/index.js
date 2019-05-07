@@ -25,18 +25,19 @@ class CryptoMenu extends Component {
     }
 
     componentWillReceiveProps(props) {
-        if (props.toggle && window.innerWidth < 491 && !this.state.showCryptoMenu) {
-            this.setState({ showCryptoMenu: true }, ()=>{
-                let hash = window.location.href
-                hash = hash.split('?')[2];
-                this.cryptoItemClick(hash);
-            });
+        let showCryptoMenu = document.getElementById("cryptoMenu").style.display;
+        if (props.toggle && window.innerWidth < 491 && showCryptoMenu === "none") {
+            document.getElementById("cryptoMenu").style.display = "block";
+            let hash = window.location.href
+            hash = hash.split('?')[2];
+            this.cryptoItemClick(hash);
         }
     }
 
     handleClickOutside = () => {
-        if (window.innerWidth < 491)
-            this.setState({ showCryptoMenu: false })
+        if (window.innerWidth < 491){
+            document.getElementById("cryptoMenu").style.display = "none";
+        }
     }
 
     renderCryptoList = cryptos => {
@@ -44,7 +45,7 @@ class CryptoMenu extends Component {
         let self = this;
         for (let i = 0; i < cryptos; i++) {
             cryptoList.push(
-                <a onClick={function(event){self.cryptoItemClick(i); self.handleClickOutside()}} >
+                <a onClick={function (event) { self.cryptoItemClick(i); self.handleClickOutside() }} >
                     <p className="crypto" id={`crypto${i}`}>
                         <div className="label">{cryptoCurrencies[i].label}</div>
                         <div className="currency">{cryptoCurrencies[i].currency.toUpperCase()}</div>
@@ -76,8 +77,8 @@ class CryptoMenu extends Component {
         return (
             <div>
                 {
-                    (this.state.showCryptoMenu || this.props.toggleMenu) &&
-                    <div className="cryptoMenu" style={{ borderRight: `solid 2px ${cryptoColor[cryptoCurrencies[this.state.selected].label]}` }}>
+                    (this.state.showCryptoMenu) &&
+                    <div className="cryptoMenu" id="cryptoMenu" style={{ borderRight: `solid 2px ${cryptoColor[cryptoCurrencies[this.state.selected].label]}` }}>
                         {this.renderCryptoList(noOfCrypto)}
                     </div>
                 }
