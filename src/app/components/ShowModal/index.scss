@@ -118,3 +118,15 @@
         padding: 0px !important;
     }
 }
+
+.viewPrivateKey{
+    color: wheat;
+    h2{
+        padding: 50px 10px 5px 10px;
+    }
+    p{
+        padding: 10px;
+        margin: 0;
+        user-select: text;
+    }
+}

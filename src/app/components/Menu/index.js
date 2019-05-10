@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { withRouter } from 'react-router';
+import onClickOutside from 'react-onclickoutside'
 import './index.scss';
 import "antd/dist/antd.css";
 
@@ -59,44 +60,52 @@ class LeftMenu extends Component {
         this.props.history.push(`home?${tempUrl}`);
     }
 
+    handleClickOutside = () => {
+        let styling = document.getElementById("leftMenu")
+        if (window.innerWidth < 769 && styling != undefined){
+            styling.style.display = "none";
+        }
+    }
+
     render() {
+        let that = this;
         return (
-            <div className="leftMenu" style={{background: "	rgba(128,128,128, 0.1)"}}>
+            <div className="leftMenu" id="leftMenu" style={{background: "	rgba(128,128,128, 0.1)"}}>
                 <div className="logo">
                     <Icon type="check-circle" style={{ color: "#9013fe", verticalAlign: "inherit" }} theme="filled" />
                 </div>
-                <a onClick={() => this.menuItemClick(0)}>
-                    <p className={"item" + " " + this.itemSelected[0]}>
+                <a onClick={function() { that.menuItemClick(0); that.handleClickOutside() }}>
+                    <p className={"item" + " " + that.itemSelected[0]}>
                         <Icon type="user" className="menuIcon" />
                         Portfolio
                     </p>
                 </a>
-                <a onClick={() => this.menuItemClick(1)}>
-                    <p className={"item" + " " + this.itemSelected[1]}>
+                <a onClick={function() { that.menuItemClick(1); that.handleClickOutside() }}>
+                    <p className={"item" + " " + that.itemSelected[1]}>
                         <Icon type="user-add" className="menuIcon" />
                         Wallet
                     </p>
                 </a>
-                <a onClick={() => this.menuItemClick(2)}>
-                    <p className={"item" + " " + this.itemSelected[2]}>
+                <a onClick={function() { that.menuItemClick(2); that.handleClickOutside() }}>
+                    <p className={"item" + " " + that.itemSelected[2]}>
                         <Icon type="user" className="menuIcon" />
                         Exchange
                     </p>
                 </a>
-                <a onClick={() => this.menuItemClick(3)}>
-                    <p className={"item" + " " + this.itemSelected[3]}>
+                <a onClick={function() { that.menuItemClick(3); that.handleClickOutside() }}>
+                    <p className={"item" + " " + that.itemSelected[3]}>
                         <Icon type="user" className="menuIcon" />
                         Backup
                     </p>
                 </a>
                 <hr size="1" style={{ margin: "10px 30px 0 30px", opacity: 0.2 }} />
-                <a onClick={() => this.menuItemClick(4)} >
-                    <p className={"item settings" + " " + this.itemSelected[4]}>
+                <a onClick={function() { that.menuItemClick(4); that.handleClickOutside() }} >
+                    <p className={"item settings" + " " + that.itemSelected[4]}>
                         <span className="bottomItems">Settings</span>
                     </p>
                 </a>
-                <a onClick={() => this.menuItemClick(5)}>
-                    <p className={"item" + " " + this.itemSelected[5]}>
+                <a onClick={function() { that.menuItemClick(5); that.handleClickOutside() }}>
+                    <p className={"item" + " " + that.itemSelected[5]}>
                         <span className="bottomItems">Help</span>
                     </p>
                 </a>
@@ -105,4 +114,4 @@ class LeftMenu extends Component {
     }
 }
 
-export default withRouter(LeftMenu);
+export default withRouter(onClickOutside(LeftMenu));

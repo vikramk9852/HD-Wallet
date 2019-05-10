@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { cryptoCurrencies, cryptoColor, noOfCrypto } from '../../constants/cryptos';
-import onClickOutside from 'react-onclickoutside'
+import onClickOutside from 'react-onclickoutside';
 import './index.scss';
 import "antd/dist/antd.css";
 

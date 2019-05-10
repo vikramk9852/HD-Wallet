@@ -46,9 +46,10 @@ class ShowModal extends Component {
     }
 
     componentDidMount() {
-        if(this.blockchainInteraction !== undefined){
-        let address = this.blockchainInteraction.getWalletInfo().address;
-        this.setState({ address: address });}
+        if (this.blockchainInteraction !== undefined) {
+            let address = this.blockchainInteraction.getWalletInfo().address;
+            this.setState({ address: address });
+        }
     }
 
     setToAddress(toAddress) {
@@ -73,7 +74,7 @@ class ShowModal extends Component {
                 this.setState({ addressText: "ADDRESS COPIED TO CLIPBOARD" });
                 break;
             case 1:
-                this.print();
+                this.print("printAddress");
                 break;
             case 2:
                 this.sendMail();
@@ -94,8 +95,8 @@ class ShowModal extends Component {
     }
 
 
-    print() {
-        printJS('printAddress', 'html');
+    print(id) {
+        printJS(id, 'html');
     }
 
     handleOk = () => {
@@ -170,7 +171,7 @@ class ShowModal extends Component {
                                     delay={1000000}
                                     onError={this.handleQRError}
                                     onScan={this.handleQRScan}
-                                    style={{ width: "480px"}}
+                                    style={{ width: "480px" }}
                                 />
                             </Modal>
                         </div>
@@ -194,28 +195,36 @@ class ShowModal extends Component {
                                 <div className="sendCryptoButton"><BorderedButton text="Send" onClick={this.handleOk} /></div>
                             </div>
                             :
+                            this.props.buttonText === "receive" ?
 
-                            <div className="receiveModal">
-                                <Card style={{ width: "170px", height: "170px" }}>
-                                    <QRCode
-                                        bgColor="#FFFFFF"
-                                        fgColor="#000000"
-                                        level="Q"
-                                        style={{ width: 160, margin: "4px" }}
-                                        value={this.state.address}
-                                    />
-                                </Card>
-                                <p className="addressText">{this.state.addressText.toUpperCase()}</p>
-                                <p className="addressText" id="printAddress" style={{ fontSize: "18px", color: cryptoColor[this.state.crypto] }}>{this.state.address}</p>
-                                <Row className="circleRow" gutter={24} style={{ margin: "0 auto" }}>
-                                    <CopyToClipboard text={this.state.address}>
-                                        <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(0) }} onMouseEnter={() => { this.onMouseEnter(0) }} onMouseLeave={this.handleMouseLeave} type="copy" /></Col>
-                                    </CopyToClipboard>
-                                    <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(1) }} onMouseEnter={() => { this.onMouseEnter(1) }} onMouseLeave={this.handleMouseLeave} type="printer" /></Col>
-                                    <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(2) }} onMouseEnter={() => { this.onMouseEnter(2) }} onMouseLeave={this.handleMouseLeave} type="mail" /></Col>
-                                    <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(3) }} onMouseEnter={() => { this.onMouseEnter(3) }} onMouseLeave={this.handleMouseLeave} type="link" /></Col>
-                                </Row>
-                            </div>
+                                <div className="receiveModal">
+                                    <Card style={{ width: "170px", height: "170px" }}>
+                                        <QRCode
+                                            bgColor="#FFFFFF"
+                                            fgColor="#000000"
+                                            level="Q"
+                                            style={{ width: 160, margin: "4px" }}
+                                            value={this.state.address}
+                                        />
+                                    </Card>
+                                    <p className="addressText">{this.state.addressText.toUpperCase()}</p>
+                                    <p className="addressText" id="printAddress" style={{ fontSize: "18px", color: cryptoColor[this.state.crypto] }}>{this.state.address}</p>
+                                    <Row className="circleRow" gutter={24} style={{ margin: "0 auto" }}>
+                                        <CopyToClipboard text={this.state.address}>
+                                            <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(0) }} onMouseEnter={() => { this.onMouseEnter(0) }} onMouseLeave={this.handleMouseLeave} type="copy" /></Col>
+                                        </CopyToClipboard>
+                                        <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(1) }} onMouseEnter={() => { this.onMouseEnter(1) }} onMouseLeave={this.handleMouseLeave} type="printer" /></Col>
+                                        <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(2) }} onMouseEnter={() => { this.onMouseEnter(2) }} onMouseLeave={this.handleMouseLeave} type="mail" /></Col>
+                                        <Col align="middle" span={6}><ModalCircle onClick={() => { this.handleCircleClick(3) }} onMouseEnter={() => { this.onMouseEnter(3) }} onMouseLeave={this.handleMouseLeave} type="link" /></Col>
+                                    </Row>
+                                </div>
+                                :
+                                <div className="viewPrivateKey" id="viewPrivateKey">
+                                    <h2 style={{ color: cryptoColor[this.props.crypto] }}>Your {this.props.crypto} Wallet Information</h2>
+                                    <p>PrivateKey: {this.props.walletInfo.privateKey}</p>
+                                    <p style={{marginBottom: "30px"}}>Address: {this.props.walletInfo.address}</p>
+                                    <BorderedButton onClick={()=>this.print("viewPrivateKey")} text="Print"/>
+                                </div>
 
                     }
                 </Modal>

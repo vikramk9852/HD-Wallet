@@ -1,0 +1,22 @@
+.rightDropDown{
+    right: 0px;
+    position: absolute;
+    color: gray;
+    font-size: 20px;
+    margin: 20px;
+    z-index: 9;
+}
+
+.ant{
+    &-dropdown{
+        &-menu{
+            background-color: black !important;
+            &-item{
+                color: white !important;
+                &:hover{
+                    background-color: gray !important;
+                }
+            }
+        }
+    }
+}

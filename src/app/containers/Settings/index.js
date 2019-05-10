@@ -24,10 +24,6 @@ class Settings extends React.Component {
 		localStorage.setItem("defaultCurrency", e);
 	}
 
-	logout = () => {
-		this.props.history.push('/login');
-	}
-
 	changePassword = () => {
 		let oldPassword = document.getElementById("oldPassword").value;
 		let newPassword = document.getElementById("newPassword").value;
@@ -87,47 +83,30 @@ class Settings extends React.Component {
 						Theme
 					</Menu.Item>
 				</Menu>
-				<Row style={{position: "absolute", bottom: "10%"}}>
-					<Col style={{padding: "10px"}}>
+				<Row style={{ position: "absolute", bottom: "10%" }}>
+					<Col style={{ padding: "10px" }}>
 						<button className="createWallet__responseButton_box_button"
-							style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)"}}
+							style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)" }}
 							onClick={this.togglePasswordChangeModal}
 						>
 							Change Password
-							
-						</button>
-					</Col>
-					<Col>
-						<button className="createWallet__responseButton_box_button"
-							style={{ backgroundImage: "linear-gradient(to right, #243949 0%, #517fa4 100%)"}}
-							onClick={this.logout}
-						>
-							Logout
+
 						</button>
 					</Col>
 				</Row>
 				{
-					this.state.current === "logout" ?
-						<Card
-							className="settingContainer__logout"
-							bordered={false}
-						>
-							<h1 style={{ margin: "30px auto 30px auto", width: "fit-content" }}>Logout from the Wallet</h1>
-
-						</Card>
+					this.state.current === "localization" ?
+						<div>
+							<p style={{ fontSize: "40px", color: "white", margin: "10px auto 0 auto" }}>Currency</p>
+							<p style={{ fontSize: "15px", color: "gray", marginBottom: "50px" }}>Set your Preffered Currency</p>
+							<Select defaultValue={defaultCurrency} style={{ width: "280px" }} onChange={this.setDefaultCurrency}>
+								<Option value="USD">USD</Option>
+								<Option value="INR">INR</Option>
+								<Option value="EUR">EUR</Option>
+							</Select>
+						</div>
 						:
-						this.state.current === "localization" ?
-							<div>
-								<p style={{ fontSize: "40px", color: "white", margin: "10px auto 0 auto" }}>Currency</p>
-								<p style={{ fontSize: "15px", color: "gray", marginBottom: "50px" }}>Set your Preffered Currency</p>
-								<Select defaultValue={defaultCurrency} style={{ width: "280px" }} onChange={this.setDefaultCurrency}>
-									<Option value="USD">USD</Option>
-									<Option value="INR">INR</Option>
-									<Option value="EUR">EUR</Option>
-								</Select>
-							</div>
-							:
-							<div></div>
+						<div></div>
 				}
 			</div>
 		);

@@ -16,13 +16,7 @@ module.exports = override(
             "@collapse-content-bg": "transparent",
             "@modal-mask-bg": "fade(black, 90%)",
 
-            "@menu-bg": "transparent",
-            "@menu-popup-bg": "transparent",
-            "@menu-item-color": "gray",
-            "@menu-highlight-color": "white",
-            "@menu-item-active-bg": "transparent",
-            "@menu-item-active-border-width": "3px",
-            "@menu-item-group-title-color": "gray"
+
 
         },
     }),

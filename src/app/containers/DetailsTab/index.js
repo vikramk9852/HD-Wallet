@@ -49,6 +49,9 @@ class DetailsTab extends Component {
         let selectedCrypto = window.location.href
         selectedCrypto = selectedCrypto.split('?')[2] || 0;
         let crypto = cryptoCurrencies[selectedCrypto].label;
+        if(this.state.crypto === crypto){
+            return ;
+        }
         this.blockchainInteraction = BlockchainInteraction.getInstance(crypto);
         this.setCrypto();
     }

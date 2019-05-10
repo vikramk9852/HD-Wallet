@@ -4,8 +4,18 @@
 .settingContainer{
     .ant{
         &-menu{
+            background-color: transparent;
+            color: gray;
             &-item{
                 margin: 5px;
+                &-selected{
+                    color: white;
+                    border-bottom: 2px solid white;
+                }
+                &:hover{
+                    color: white;
+                    border-bottom: 2px solid white;
+                }
             }
 
             &-light{
@@ -36,19 +46,7 @@
             }
         }
     }
-    margin: 50px 0 0 50px;
-
-    &__logout{
-        margin: 30px auto;
-        width: 400px;
-        height: 400px;
-        background-color: rgb(32, 38, 43);
-        border-bottom-left-radius: 5.0rem;
-        border-bottom-right-radius: 5.0rem;
-        border-top-right-radius: 3.0rem;
-        border-top-left-radius: 3.0rem;
-
-    }
+    padding: 50px 0 0 50px;
 
     &__changePassword{
         display: grid;
