@@ -92,12 +92,12 @@ class Bitcoin {
     }
 
     getTransactionDetails(txHash) {
-        let url = `https://testnet.blockexplorer.com/tx/${txHash}`;
+        let url = `https://www.blockchain.com/btctest/tx/${txHash}`;
         return url;
     }
 
     getAllTransactions(address) {
-        let url = `https://testnet.blockexplorer.com/address/${address}`;
+        let url = `https://www.blockchain.com/btctest/address/${address}`;
         return url
     }
 }

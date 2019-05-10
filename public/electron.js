@@ -14,6 +14,8 @@ function createWindow () {
 
   win.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
 
+  // win.loadURL("http://localhost:3000");
+
   //// uncomment below to open the DevTools.
   // win.webContents.openDevTools()
 

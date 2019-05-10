@@ -112,7 +112,7 @@ class DetailsTab extends Component {
             })
         }
         else {
-            this.setState({ cryptoValue: "0", fiatValue: "0.00" });
+            this.setState({ cryptoValue: "0", fiatValue: "0.00", expandalbleDataSource: undefined });
         }
         this.cryptoCurrencyColor = cryptoColor[cryptoCurrencies[selectedCrypto].label]
         this.setState({ crypto: cryptoCurrencies[selectedCrypto].label, currency: cryptoCurrencies[selectedCrypto].currency })
@@ -141,6 +141,7 @@ class DetailsTab extends Component {
     }
 
     formatSubstr = (string, value) =>{
+        string = string.toString();
         return string.substr(0, value);
     }
 

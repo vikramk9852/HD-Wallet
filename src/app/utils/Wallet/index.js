@@ -1,7 +1,3 @@
-import { func } from "prop-types";
-
-var hdKey = require("ethereumjs-wallet/hdkey")
-// var Wallet = require("ethereumjs-wallet")
 var bip39 = require("bip39")
 var unorm = require('unorm')
 var _pbkdf2 = require('pbkdf2')

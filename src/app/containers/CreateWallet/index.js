@@ -168,7 +168,9 @@ class CreateWallet extends Component {
             this.setState(this.state.previousState)
         }
         else {
+            document.getElementById("printPassPhrase").style.display = "block";
             printJS('printPassPhrase', 'html');
+            document.getElementById("printPassPhrase").style.display = "none";
         }
     }
 
@@ -194,7 +196,7 @@ class CreateWallet extends Component {
         return (
 
             <div className="createWallet">
-                <p id="printPassPhrase" style={{float: "left", color: "transparent", width: "600px" }}>{this.state.passPhrase}</p>
+                <p id="printPassPhrase" style={{float: "left", color: "transparent", width: "600px", display: "none" }}>{this.state.passPhrase}</p>
                 <div className="createWallet__stepper">
                     <Row className="line">
                         <Col align="middle" span={6}><div style={this.state.roundCircle[0]}>{this.state.show[0]}</div></Col>
