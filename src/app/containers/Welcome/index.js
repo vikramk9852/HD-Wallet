@@ -8,63 +8,72 @@ import Statistics from '../Statistics';
 
 class Welcome extends Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state={
+		this.state = {
 			text: "Create Account",
-			boxText: "Create a new account to start doing Crypto"
+			boxText: "Create a new account to start doing Crypto",
+			showLoading: true
 		}
 	}
 
-	componentWillMount(){
-		if(this.props.from !== "landingPage")
-			this.setState({text: "Send assets", boxText: "Do Crypto with any supported digital asset"})
+	componentWillMount() {
+		if (this.props.from !== "landingPage")
+			this.setState({ text: "Send assets", boxText: "Do Crypto with any supported digital asset" })
 	}
 
 	handleOnClick = (action) => {
-		if(action === "recover"){
+		if (action === "recover") {
 			this.props.history.push("/recover");
 		}
-		else{
-			if(this.props.from === "landingPage"){
+		else {
+			if (this.props.from === "landingPage") {
 				this.props.history.push("/createwallet");
 			}
-			else{
+			else {
 				this.props.history.push('?cryptoMenu?0')
 			}
 		}
 	}
 
+	showLoader = () => {
+		this.setState({ showLoading: false });
+	}
+
 	render() {
+		console.log(this.state.showLoading)
 		return (
 			<div className="mainPage">
 				<div style={{ textAlign: 'center' }}>
-					<Row className="welcomePage" gutter={24}>
-						<Col span={24} align="middle">
-							<h1 className="welcome">Welcome</h1>
-						</Col>
-						<Col xl={12} lg={12} sm={24} md={12} xs={24} align="middle">
-							<div className="portfolioBox">
-								<Icon className="portfolioIcon" type="user-add" />
-								<p className="portfolioText">{this.state.boxText}</p>
-								<BorderedButton className="welcomeButton" onClick={()=>{this.handleOnClick("sendAssets")}} text={this.state.text} />
-							</div>
-						</Col>
-						<Col xl={12} lg={12} sm={24} md={12} xs={24} align="middle">
-							<div className="portfolioBox">
-								<Icon className="portfolioIcon" type="user-add" />
-								<p className="portfolioText">{"Restore using your 12-word Phrase or email recovery file."}</p>
-								<BorderedButton className="welcomeButton" onClick={()=>{this.handleOnClick("recover")}} text="Recover" />
-							</div>
-						</Col>
-					</Row>
-				{this.props.from !== "landingPage"&&	
-				<Statistics />
-				}
+					{
+						(!this.state.showLoading || this.props.from === "landingPage") &&
+						<Row className="welcomePage" gutter={24}>
+							<Col span={24} align="middle">
+								<h1 className="welcome">Welcome</h1>
+							</Col>
+							<Col xl={12} lg={12} sm={24} md={12} xs={24} align="middle">
+								<div className="portfolioBox">
+									<Icon className="portfolioIcon" type="user-add" />
+									<p className="portfolioText">{this.state.boxText}</p>
+									<BorderedButton className="welcomeButton" onClick={() => { this.handleOnClick("sendAssets") }} text={this.state.text} />
+								</div>
+							</Col>
+							<Col xl={12} lg={12} sm={24} md={12} xs={24} align="middle">
+								<div className="portfolioBox">
+									<Icon className="portfolioIcon" type="user-add" />
+									<p className="portfolioText">{"Restore using your 12-word Phrase or email recovery file."}</p>
+									<BorderedButton className="welcomeButton" onClick={() => { this.handleOnClick("recover") }} text="Recover" />
+								</div>
+							</Col>
+						</Row>
+					}
+					{this.props.from !== "landingPage" &&
+						<Statistics showLoader={this.showLoader} />
+					}
 				</div>
 			</div>
-		)
-	}
-}
-
-export default withRouter(Welcome);
+				)
+			}
+		}
+		
+		export default withRouter(Welcome);

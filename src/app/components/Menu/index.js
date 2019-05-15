@@ -62,7 +62,7 @@ class LeftMenu extends Component {
 
     handleClickOutside = () => {
         let styling = document.getElementById("leftMenu")
-        if (window.innerWidth < 769 && styling != undefined){
+        if (window.innerWidth < 890 && styling != undefined){
             styling.style.display = "none";
         }
     }

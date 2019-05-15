@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Table, Icon } from 'antd';
+import { Row, Col, Table, Progress } from 'antd';
 import { withRouter } from 'react-router';
 import { cryptoCurrencies, cryptoColor, noOfCrypto, currencySymbols } from '../../constants/cryptos';
 import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
@@ -24,7 +24,8 @@ class Statistics extends Component {
 		super(props);
 		this.state = {
 			dataSource: [],
-			showLoading: false
+			showLoading: false,
+			progressPercent: 0
 		}
 		this.columns = [
 			{
@@ -32,8 +33,7 @@ class Statistics extends Component {
 				dataIndex: 'coin',
 				key: 'coin',
 				width: '20%',
-			},
-			{
+			},{
 				title: "MarketCap",
 				dataIndex: 'marketCap',
 				key: 'marketCap',
@@ -62,11 +62,15 @@ class Statistics extends Component {
 				editable: false
 			}
 		]
+		if(window.innerWidth < "890"){
+			this.columns.splice(1, 1);
+			console.log(this.columns)
+		}
 	}
 
 	componentDidMount() {
 		this.setState({ showLoading: true }, async () => {
-			let dataSource = [];
+			let dataSource = [], percent = 0;
 			// let balance = new Array(noOfCrypto);
 			// for (let i = 0; i < noOfCrypto; i++) {
 			// 	var cryptoCurrency = cryptoCurrencies[i];
@@ -117,29 +121,33 @@ class Statistics extends Component {
 					value = await CryptoCompare.convert(currency, localCurrency);
 					value = JSON.parse(value);
 					fiatValue = value[currency.toString()][localCurrency];
-					balance = 0;
-					value = 0;
+					balance = "0.00";
+					value = "0.00";
 				}
-				console.log(currency);
 				let currencyColor = cryptoColor[cryptoCurrency.label];
 				let cryptoBalance = balance + " " + currency;
 				value = localCurrencySymbol + " " + value;
 				let label = localCurrencySymbol + fiatValue + " " + localCurrency;
 				dataSource.push({
 					key: `row${i}`,
-					coin:<div>
-							<img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{ paddingRight: "10px" }} />
+					coin: <div>
+						<img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{ paddingRight: "10px", verticalAlign: "sub" }} />
+						<span style={{display: "inline-block"}}>
 							<p className="cryptoLabel">{cryptoCurrency.label}</p><br />
 							<p className="cryptoLabel">{label}</p>
-						</div>,
+						</span>
+					</div>,
 					marketCap: "MarketCap",
 					balance: <d style={{ color: currencyColor }}> {cryptoBalance}</d>,
 					value: value,
 					percent: "0%",
 					onMouseEnter: this.mouseEnter
 				})
+				percent += (100 / noOfCrypto);
+				this.setState({ progressPercent: parseInt(percent) });
 			}
 			this.setState({ dataSource: dataSource, showLoading: false });
+			this.props.showLoader();
 		})
 
 
@@ -184,7 +192,14 @@ class Statistics extends Component {
 		return (
 			<div className="statistics" style={{ marginTop: "20px" }}>
 				{this.state.showLoading ?
-					<div className="statistics__loader"><Loader /></div>
+					<div className="statistics__loader">
+						<Progress
+							type="circle"
+							percent={this.state.progressPercent}
+							strokeColor="green"
+						/>
+						<div style={{ marginTop: "-60px" }}><Loader /></div>
+					</div>
 					:
 					<Table
 						bordered
