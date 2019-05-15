@@ -65,7 +65,7 @@ class Statistics extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({ showLoading: true }, async() => {
+		this.setState({ showLoading: true }, async () => {
 			let dataSource = [];
 			// let balance = new Array(noOfCrypto);
 			// for (let i = 0; i < noOfCrypto; i++) {
@@ -96,30 +96,42 @@ class Statistics extends Component {
 			// 		}					
 			// 	});
 			// }
-			for(let i = 0; i < noOfCrypto; i++){
+			for (let i = 0; i < noOfCrypto; i++) {
 				let cryptoCurrency = cryptoCurrencies[i];
 				this.blockchainInteraction = BlockchainInteraction.getInstance(cryptoCurrency.label);
 				let balance, value;
 				let currency = cryptoCurrency.currency.toUpperCase();
-				try{
+				let localCurrency = localStorage.getItem("defaultCurrency");
+				let localCurrencySymbol = currencySymbols[localCurrency];
+				var fiatValue;
+				try {
 					balance = await this.blockchainInteraction.getBalance();
-					value = await CryptoCompare.convert(currency, localStorage.getItem("defaultCurrency"));
+					value = await CryptoCompare.convert(currency, localCurrency);
 					value = JSON.parse(value);
-					value = value[currency.toString()][localStorage.getItem("defaultCurrency")]*balance;
+					fiatValue = value[currency.toString()][localCurrency];
+					value = fiatValue * balance;
 					value = value.toFixed(2);
 					balance = parseFloat(balance);
 					balance = balance.toFixed(2);
-				}catch(err){
+				} catch (err) {
+					value = await CryptoCompare.convert(currency, localCurrency);
+					value = JSON.parse(value);
+					fiatValue = value[currency.toString()][localCurrency];
 					balance = 0;
 					value = 0;
 				}
-				console.log(value);
+				console.log(currency);
 				let currencyColor = cryptoColor[cryptoCurrency.label];
 				let cryptoBalance = balance + " " + currency;
-				value = currencySymbols[localStorage.getItem("defaultCurrency")]+ " " + value;
+				value = localCurrencySymbol + " " + value;
+				let label = localCurrencySymbol + fiatValue + " " + localCurrency;
 				dataSource.push({
 					key: `row${i}`,
-					coin: <div><img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{ paddingRight: "10px" }} /><p style={{ display: "inline" }}>{cryptoCurrency.label}</p></div>,
+					coin:<div>
+							<img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{ paddingRight: "10px" }} />
+							<p className="cryptoLabel">{cryptoCurrency.label}</p><br />
+							<p className="cryptoLabel">{label}</p>
+						</div>,
 					marketCap: "MarketCap",
 					balance: <d style={{ color: currencyColor }}> {cryptoBalance}</d>,
 					value: value,
@@ -127,7 +139,7 @@ class Statistics extends Component {
 					onMouseEnter: this.mouseEnter
 				})
 			}
-			this.setState({dataSource: dataSource, showLoading: false});
+			this.setState({ dataSource: dataSource, showLoading: false });
 		})
 
 

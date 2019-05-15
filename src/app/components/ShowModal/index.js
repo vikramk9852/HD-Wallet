@@ -11,7 +11,7 @@ import ModalCircle from '../ModalCircle';
 import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
 import Loader from '../../components/Loader';
 import QrReader from 'react-qr-scanner';
-import printJS from 'print-js';
+import { saveAs } from 'file-saver';
 
 const importAll = require =>
     require.keys().reduce((acc, next) => {
@@ -96,7 +96,13 @@ class ShowModal extends Component {
 
 
     print(id) {
-        printJS(id, 'html');
+        let details = "address";
+        if(id === "viewPrivateKey"){
+            details = "wallet-info";
+        }
+        let text = document.getElementById(id).innerHTML;
+        let blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        saveAs.saveAs(blob, `${this.props.crypto}-${details}.txt`);
     }
 
     handleOk = () => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { message, Row, Col, Icon } from 'antd';
 import * as WalletFunction from '../../utils/Wallet';
 import './index.scss';
-import printJS from 'print-js';
+import { saveAs } from 'file-saver';
 
 // const Step = Steps.Step;
 
@@ -168,9 +168,8 @@ class CreateWallet extends Component {
             this.setState(this.state.previousState)
         }
         else {
-            document.getElementById("printPassPhrase").style.display = "block";
-            printJS('printPassPhrase', 'html');
-            document.getElementById("printPassPhrase").style.display = "none";
+            var blob = new Blob([this.state.passPhrase], { type: "text/plain;charset=utf-8" });
+            saveAs.saveAs(blob, "passPhrase.txt");
         }
     }
 
@@ -196,7 +195,6 @@ class CreateWallet extends Component {
         return (
 
             <div className="createWallet">
-                <p id="printPassPhrase" style={{float: "left", color: "transparent", width: "600px", display: "none" }}>{this.state.passPhrase}</p>
                 <div className="createWallet__stepper">
                     <Row className="line">
                         <Col align="middle" span={6}><div style={this.state.roundCircle[0]}>{this.state.show[0]}</div></Col>
@@ -220,7 +218,7 @@ class CreateWallet extends Component {
                         <Row className="createWallet__success">
                             <Col align="middle">
                                 {/* <p align="center">Show success Icon</p> */}
-                                <Icon type = "edit" style={{ fontSize: "40px" }} />
+                                <Icon type="edit" style={{ fontSize: "40px" }} />
                             </Col>
                         </Row>
                     }
@@ -254,7 +252,7 @@ class CreateWallet extends Component {
                             <div>
                                 {
                                     this.state.showLoading &&
-                                    <Row style={{width: "fit-content", margin:"0 auto"}}>
+                                    <Row style={{ width: "fit-content", margin: "0 auto" }}>
                                         <Col>
                                             <Icon type="loading" style={{ fontSize: "40px" }} />
                                         </Col>
