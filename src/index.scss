@@ -1,9 +1,16 @@
 body {
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-       user-select: none;
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	user-select: none;
+
+	::selection {
+		background: white; /* WebKit/Blink Browsers */
+	}
+	::-moz-selection {
+		background: white; /* Gecko Browsers */
+	}
 }
 
 code {

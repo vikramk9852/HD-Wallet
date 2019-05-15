@@ -4,7 +4,7 @@ export function getInstance(crypto) {
     let Interaction = new BlockchainInteraction()
     switch (crypto) {
         case "0x":
-            return Interaction.zrx;
+            return Interaction.Zrx;
         case "Augur":
             return Interaction.Augur;
         case "Binance":
@@ -27,7 +27,9 @@ export function getInstance(crypto) {
             return Interaction.Ethereum;
         case "Ethereum Classic":
             return Interaction.EthereumClassic;
-        case "LiteCoin":
-            return Interaction.LiteCoin;
+        case "Litecoin":
+            return Interaction.Litecoin;
+        case "Ripple":
+            return Interaction.Ripple;
     }
 }

@@ -214,7 +214,7 @@ class DetailsTab extends Component {
                                             <Panel align="left" header="DESCRIPTION" key="1">
                                                 <p className="descriptionText">
                                                     {CryptoDescription[this.state.crypto].split("\n").map((i, key) => {
-                                                        return <text style={{color: "cornsilk"}} key={key}>{i}<br/></text>;
+                                                        return <text style={{color: "cornsilk", cursor: "text", userSelect: "text"}} key={key}>{i}<br/></text>;
                                                     })}
                                                 </p>
                                             </Panel>
