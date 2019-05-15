@@ -5,8 +5,6 @@
     display: flow-root;
     height: 100vh;
     overflow-y: auto;
-    // margin-left: 170px !important;
-    // max-width: 520px;
     .buttons{
         margin: 0 auto;
         max-width: 520px;
@@ -66,12 +64,6 @@
         border: none;
         background: transparent;
     }
-    
-    .description{
-        // max-height: 300px;
-        height: 58vh;
-        overflow: auto;
-    }
 
     .noTransaction{
         font-size: 40px;
@@ -90,10 +82,6 @@
     @media(max-width: 991px){
         .cryptoIcon{
             margin-top: 50px;
-        }
-
-        .description{
-            height: 39vh;
         }
 
     }

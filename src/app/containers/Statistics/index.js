@@ -132,9 +132,9 @@ class Statistics extends Component {
 					key: `row${i}`,
 					coin: <div>
 						<img src={images[`${cryptoCurrency.currency.toUpperCase()}.svg`]} width="40px" style={{ paddingRight: "10px", verticalAlign: "sub" }} />
-						<span style={{display: "inline-block"}}>
-							<p className="cryptoLabel">{cryptoCurrency.label}</p><br />
-							<p className="cryptoLabel">{label}</p>
+						<span className="cryptoLabel">
+							<p>{cryptoCurrency.label}</p><br />
+							<p>{label}</p>
 						</span>
 					</div>,
 					marketCap: "MarketCap",
