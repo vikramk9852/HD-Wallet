@@ -12,6 +12,12 @@
     &__loader{
         @include absCenter;
     }
+    @media(max-width: 491px){
+        .ant-table{
+            width: 93vw;
+            overflow: auto;
+        }
+    }
 }
 
 
@@ -62,12 +68,7 @@ tr{
     }
 }
 
-@media(max-width: 491px){
-    .ant-table{
-        width: 93vw;
-        overflow: auto;
-    }
-}
+
 
 .cryptoLabel{
     display: inline-block;

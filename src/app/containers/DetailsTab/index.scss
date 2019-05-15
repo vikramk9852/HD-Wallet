@@ -94,5 +94,11 @@
         background-color: gray;
         color: black;
     }
+    @media(max-width: 491px){
+        .ant-table{
+            width: 85vw;
+            overflow: auto;
+        }
+    }
 }
 
