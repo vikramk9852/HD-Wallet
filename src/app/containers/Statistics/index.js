@@ -196,7 +196,7 @@ class Statistics extends Component {
 						<Progress
 							type="circle"
 							percent={this.state.progressPercent}
-							strokeColor="green"
+							strokeColor="#3D5C75"
 						/>
 						<div style={{ marginTop: "-60px" }}><Loader /></div>
 					</div>

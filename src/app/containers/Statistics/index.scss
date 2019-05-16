@@ -18,6 +18,11 @@
             overflow: auto;
         }
     }
+    @media(min-width: 890px){
+        &__loader{
+            left: 58%;
+        }
+    }
 }
 
 
@@ -43,8 +48,13 @@
         }
     }
     &-progress{
-        &-text, &-circle{
-            color: transparent;
+        &-text{
+            color: transparent !important;
+        }
+        &-circle{
+            &-trail{
+                stroke: transparent !important;
+            }
         }
     }
 }
