@@ -1,21 +1,67 @@
+@import '../../../stylesheets/mixins.scss';
+
 .statistics{
     height: 99vh !important;
-    overflow-y: auto;
-    // overflow-x: auto;
     margin: 5px 15px 0px 15px;
 
     h1{
         font-size: 50px;
         padding-top: 100px;
-        color: wheat;
+        color: white;
+    }
+    &__loader{
+        @include absCenter;
+    }
+    @media(max-width: 491px){
+        .ant-table{
+            width: 93vw;
+            overflow: auto;
+        }
+    }
+    @media(min-width: 890px){
+        &__loader{
+            left: 58%;
+        }
     }
 }
 
 
+.ant{
+    &-table{
+        &-row{
+            color: gray;
+            border: none;
+            border-top: 8px solid #191C1F;
+            border-bottom: 8px solid #191C1F !important;
+        }
+        &-bordered, &-body>table{
+            border: none !important;
+        }
+        &-wrapper{
+            margin: 0 auto;
+        }
+        &-content{
+            min-width: 570px;
+        }
+        &-thead{
+            line-height: 0.5;
+        }
+    }
+    &-progress{
+        &-text{
+            color: transparent !important;
+        }
+        &-circle{
+            &-trail{
+                stroke: transparent !important;
+            }
+        }
+    }
+}
+
 th, td{
     border-left: none !important;
     border-right: none !important;
-    line-height: 0.5;
 }
 
 th{
@@ -25,17 +71,6 @@ th{
     }
 }
 
-.ant-table-row{
-    
-    color: wheat;
-    border: none;
-    border-top: 8px solid #191C1F;
-    border-bottom: 8px solid #191C1F !important;
-}
-.ant-table-bordered, .ant-table-body > table{
-    border: none !important;
-}
-
 tr{
     border-right: 4px solid transparent !important;
     &:hover{
@@ -43,14 +78,13 @@ tr{
     }
 }
 
-.ant-table-wrapper{
-    // width: 90%;
-    margin: 0 auto;
-    // overflow-x: auto;
-}
 
-@media(max-width: 491px){
-    .ant-table{
-        width: 70vw;
+
+.cryptoLabel{
+    display: inline-block;
+    line-height: 1.3;
+    p{
+        display: inline;
+        color: white;
     }
 }

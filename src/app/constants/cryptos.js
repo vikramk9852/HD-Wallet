@@ -1,7 +1,7 @@
 
-export var IMAGE_PATH = "node_modules/cryptocurrency-icons/svg/color"
+var IMAGE_PATH = "node_modules/cryptocurrency-icons/svg/color"
 
-export var cryptoCurrencies = [
+var cryptoCurrencies = [
     {"label":"0x","currency":"zrx"},
     {"label":"Augur","currency":"rep"},
     {"label":"Binance","currency":"bnb"},
@@ -18,9 +18,9 @@ export var cryptoCurrencies = [
     {"label":"Ripple", "currency": "xrp"}
 ];
 
-export var noOfCrypto = 14;
+var noOfCrypto = 14;
 
-export var cryptoColor = {
+var cryptoColor = {
    "0x": "#AEAEAE",
    "Augur": "#B82990",
    "Binance": "#D79C0A",
@@ -37,7 +37,7 @@ export var cryptoColor = {
    "Ripple": "#00AAE4"
 }
 
-export var currencySymbols = {
+var currencySymbols = {
     'USD': '$', // US Dollar
     'EUR': '€', // Euro
     'CRC': '₡', // Costa Rican Colón
@@ -54,3 +54,11 @@ export var currencySymbols = {
     'UAH': '₴', // Ukrainian Hryvnia
     'VND': '₫', // Vietnamese Dong
 };
+
+export{
+    IMAGE_PATH,
+    cryptoCurrencies,
+    noOfCrypto,
+    cryptoColor,
+    currencySymbols
+}
