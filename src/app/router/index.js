@@ -8,6 +8,7 @@ import LandingPage from '../containers/LandingPage';
 import CreateWallet from '../containers/CreateWallet';
 import RecoverWallet from '../containers/RecoverWallet';
 import Login from '../containers/Login';
+import Backup from '../containers/Backup';
 import Settings from '../containers/Settings';
 import './index.scss';
 
@@ -65,6 +66,7 @@ class Router extends React.Component {
 							<Route path='/createwallet' component={CreateWallet} />
 							<Route path='/recover' component={RecoverWallet} />
 							<Route path='/login' component={Login} />
+							<Route path='/backup' component={Backup} />
 							<Route path='/settings' component={Settings} />
 						</Switch >
 					</Content>

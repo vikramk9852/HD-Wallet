@@ -1,0 +1,49 @@
+@import '../../../stylesheets/mixins.scss';
+
+.backup{
+
+    &__heading{
+        margin: auto;
+        padding: 150px 20px 10px 20px;
+        width: fit-content;
+    }
+
+    &__text{
+        margin: auto;
+        padding: 10px 20px 10px 20px;
+        width: fit-content;
+        color: gray;
+    }
+
+    &__passwordBox{
+        input{
+            background: transparent !important;
+            outline: none;
+            border: none;
+            text-align: center;
+            border-bottom: 1px solid #aab1b7;
+            color: white;
+            border-radius: 0;
+            width: 40%;
+            padding: 0px !important;
+            margin: 28px 0px;
+            height: 25px;
+            font-size: 20px;
+            &:hover, &:focus{
+                outline: none;
+            }    
+        }
+
+        margin: 50px auto;
+    }
+}
+
+@media(max-width: 491px){
+    .backup{
+        &__passwordBox{
+            input{
+                width: 80%;
+            }
+        }
+    }
+}

@@ -76,17 +76,17 @@ class LeftMenu extends Component {
                 </div>
                 <a onClick={function() { that.menuItemClick(0); that.handleClickOutside() }}>
                     <p className={"item" + " " + that.itemSelected[0]}>
-                        <Icon type="user" className="menuIcon" />
+                        <Icon type="dashboard" className="menuIcon" />
                         Portfolio
                     </p>
                 </a>
                 <a onClick={function() { that.menuItemClick(1); that.handleClickOutside() }}>
                     <p className={"item" + " " + that.itemSelected[1]}>
-                        <Icon type="user-add" className="menuIcon" />
+                        <Icon type="wallet" className="menuIcon" />
                         Wallet
                     </p>
                 </a>
-                <a onClick={function() { that.menuItemClick(2); that.handleClickOutside() }}>
+                <a style={{display: "none"}} onClick={function() { that.menuItemClick(2); that.handleClickOutside() }}>
                     <p className={"item" + " " + that.itemSelected[2]}>
                         <Icon type="user" className="menuIcon" />
                         Exchange
@@ -94,7 +94,7 @@ class LeftMenu extends Component {
                 </a>
                 <a onClick={function() { that.menuItemClick(3); that.handleClickOutside() }}>
                     <p className={"item" + " " + that.itemSelected[3]}>
-                        <Icon type="user" className="menuIcon" />
+                        <Icon type="undo" className="menuIcon" />
                         Backup
                     </p>
                 </a>
