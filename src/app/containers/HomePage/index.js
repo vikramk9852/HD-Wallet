@@ -10,6 +10,7 @@ import Settings from '../Settings';
 import Loader from '../../components/Loader';
 import * as BlockchainInteraction from '../../utils/SubmitTransactions/ReturnInstances';
 import ShowModal from '../../components/ShowModal';
+import Backup from '../Backup';
 
 class HomePage extends Component {
 
@@ -96,6 +97,9 @@ class HomePage extends Component {
                         }
                     </div>
                 )
+
+            case "backup":
+                return <Backup />
 
             case "settings":
                 return <Settings />

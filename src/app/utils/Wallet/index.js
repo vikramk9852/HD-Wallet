@@ -1,3 +1,5 @@
+import { func } from "prop-types";
+
 var bip39 = require("bip39")
 var unorm = require('unorm')
 var _pbkdf2 = require('pbkdf2')
@@ -47,21 +49,20 @@ function createWallet(password){
     
 }
 
-function logIn(password){
+function logIn(password, backup){
 
     //hash password
     var hashedPassword = _pbkdf2.pbkdf2Sync(password, '', 2048, 64, 'sha512').toString('hex')
 
     //retrieve hashed password from local storage
     var retrievedPassword = localStorage.getItem("hashedPassword")
-    // console.log(hashedPassword==retrievedPassword)
+    console.log(hashedPassword==retrievedPassword)
 
     if(retrievedPassword === hashedPassword){
 
-        //retrieve wallets from local storage
-        // var wallet = JSON.parse(localStorage.getItem("address"))[0];
-        // var account = localStorage.getItem(wallet);
-        // var retrievedAccount =  fromV3(account, password);
+        if(backup){
+            return localStorage.getItem("mnemonic");
+        }
 
         return true;
     }
@@ -104,6 +105,7 @@ function generateWallet(mnemonic, password){
         seed.then(function(result){
             result = result.toString('hex');
             localStorage.setItem("masterSeed", result);
+            localStorage.setItem("mnemonic", mnemonic);
             localStorage.setItem("defaultCurrency", "USD");
             resolve(result);
         },

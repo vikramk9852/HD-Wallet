@@ -1,6 +1,6 @@
 {
-	"name": "crypto-wallet",
-	"version": "0.1.0",
+	"name": "hd-wallet",
+	"version": "0.2.0",
 	"author": "vikram",
 	"private": true,
 	"main": "public/electron.js",
