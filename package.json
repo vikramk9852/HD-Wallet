@@ -49,7 +49,7 @@
 	},
 	"devDependencies": {
 		"electron-builder": "^20.39.0",
-		"electron": "~3.1.7"
+		"electron": "~7.2.4"
 	},
 	"scripts": {
 		"start": "react-app-rewired start",
