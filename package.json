@@ -25,7 +25,7 @@
 		"jsqr": "^1.2.0",
 		"less": "^3.9.0",
 		"less-loader": "^4.1.0",
-		"node-sass": "^4.11.0",
+		"node-sass": "^7.0.0",
 		"print-js": "^1.0.55",
 		"react": "^16.8.6",
 		"react-addons-css-transition-group": "^15.6.2",
